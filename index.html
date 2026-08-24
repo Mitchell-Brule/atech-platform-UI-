@@ -167,14 +167,7 @@
       </nav>
 
       <!-- Right Actions -->
-      <div class="flex items-center gap-2">
-        
-        <!-- Sleek Undercover PRO Mode Toggle -->
-        <button id="topProBtn" onclick="toggleProMode()" class="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-neutral-100/80 hover:bg-neutral-200/70 border border-black/[0.04] text-xs font-mono font-semibold text-neutral-700 hover:text-black shadow-sm transition-all">
-          <span id="topProDot" class="w-1.5 h-1.5 rounded-full bg-neutral-400 transition-colors"></span>
-          <span id="topProText">PRO</span>
-        </button>
-
+      <div class="flex items-center gap-2.5">
         <button onclick="openPersonaModal()" class="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-neutral-100/80 hover:bg-neutral-200/70 border border-black/[0.04] text-xs font-medium text-neutral-800 shadow-sm transition-all">
           <i data-lucide="user" class="w-3.5 h-3.5 text-neutral-500"></i>
           <span id="headerPersonaLabel" class="font-bold text-neutral-900">Hobbyist</span>
@@ -391,16 +384,9 @@
       <!-- ================= STAGE 3: DESIGN (STANDARD & ADVANCED MODES) ================= -->
       <div id="stage-3" class="space-y-6 hidden">
         
-        <!-- Header with Sleek Undercover Pro Status -->
+        <!-- Header -->
         <div class="flex items-center justify-between pb-2 border-b border-black/[0.06]">
-          <div class="flex items-center gap-2.5">
-            <h2 class="text-lg font-bold text-neutral-900">Design System</h2>
-            <span id="stage3ProIndicator" class="hidden text-[10px] font-mono bg-neutral-900 text-yellow-300 font-bold px-2 py-0.5 rounded-full">PRO ACTIVE</span>
-          </div>
-          <button id="advToggleQuick" onclick="toggleProMode()" class="text-xs font-mono text-neutral-400 hover:text-black flex items-center gap-1 transition-colors">
-            <span id="advToggleQuickLabel">Switch to Pro</span>
-            <i data-lucide="sliders" class="w-3 h-3 text-neutral-500"></i>
-          </button>
+          <h2 class="text-lg font-bold text-neutral-900">Design System</h2>
         </div>
 
         <!-- ================= STANDARD DESIGN VIEW ================= -->
@@ -2109,10 +2095,26 @@ void loop() {
 
   <!-- Persona Modal -->
   <div id="personaModal" class="fixed inset-0 bg-black/40 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
-    <div class="bg-white max-w-sm w-full rounded-3xl p-5 border border-black/[0.08] shadow-2xl space-y-3 text-xs">
+    <div class="bg-white max-w-sm w-full rounded-3xl p-5 border border-black/[0.08] shadow-2xl space-y-3.5 text-xs">
       <div class="flex items-center justify-between border-b border-black/[0.06] pb-2">
         <h3 class="font-bold text-neutral-900 text-sm">Select Profile</h3>
         <button onclick="closePersonaModal()" class="text-neutral-400 hover:text-neutral-800"><i data-lucide="x" class="w-4 h-4"></i></button>
+      </div>
+
+      <!-- Slide Switch for Pro at Top of Select Profile -->
+      <div class="flex items-center justify-between p-3 rounded-2xl bg-neutral-50 border border-black/[0.06] transition-all">
+        <div class="space-y-0.5">
+          <div class="flex items-center gap-1.5 font-bold text-neutral-900 text-xs font-mono">
+            <span>PRO</span>
+            <span id="modalProBadge" class="text-[9px] bg-neutral-200 text-neutral-700 px-1.5 py-0.5 rounded font-semibold">OFF</span>
+          </div>
+          <p class="text-[10px] text-neutral-400">Parametric CAD, 14-Port Matrix &amp; RTOS</p>
+        </div>
+
+        <label class="relative inline-flex items-center cursor-pointer">
+          <input type="checkbox" id="modalProToggle" onchange="toggleProSlide(this.checked)" class="sr-only peer" />
+          <div class="w-9 h-5 bg-neutral-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-neutral-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-black"></div>
+        </label>
       </div>
 
       <div class="grid grid-cols-2 gap-2">
@@ -2605,34 +2607,37 @@ void loop() {
       setDesignMode(isAdv ? 'standard' : 'advanced');
     }
 
+    function toggleProSlide(checked) {
+      const badge = document.getElementById('modalProBadge');
+      if (badge) {
+        badge.textContent = checked ? 'ACTIVE' : 'OFF';
+        badge.className = checked ? 'text-[9px] bg-black text-white px-1.5 py-0.5 rounded font-bold' : 'text-[9px] bg-neutral-200 text-neutral-700 px-1.5 py-0.5 rounded font-semibold';
+      }
+      setDesignMode(checked ? 'advanced' : 'standard');
+    }
+
     function setDesignMode(mode) {
       state.designMode = mode;
       const stdView = document.getElementById('stage-3-standard');
       const advView = document.getElementById('stage-3-advanced');
-      const topProBtn = document.getElementById('topProBtn');
-      const topProDot = document.getElementById('topProDot');
-      const topProText = document.getElementById('topProText');
-      const stage3ProIndicator = document.getElementById('stage3ProIndicator');
-      const advToggleQuickLabel = document.getElementById('advToggleQuickLabel');
+      const toggle = document.getElementById('modalProToggle');
+      const badge = document.getElementById('modalProBadge');
 
-      if (mode === 'advanced') {
+      const isAdv = mode === 'advanced';
+      if (toggle) toggle.checked = isAdv;
+      if (badge) {
+        badge.textContent = isAdv ? 'ACTIVE' : 'OFF';
+        badge.className = isAdv ? 'text-[9px] bg-black text-white px-1.5 py-0.5 rounded font-bold' : 'text-[9px] bg-neutral-200 text-neutral-700 px-1.5 py-0.5 rounded font-semibold';
+      }
+
+      if (isAdv) {
         if (stdView) { stdView.classList.remove('block'); stdView.classList.add('hidden'); }
         if (advView) { advView.classList.remove('hidden'); advView.classList.add('block'); }
-        if (topProBtn) topProBtn.className = "flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-black text-white border border-black text-xs font-mono font-semibold shadow-sm transition-all";
-        if (topProDot) topProDot.className = "w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse";
-        if (topProText) topProText.textContent = "PRO ACTIVE";
-        if (stage3ProIndicator) { stage3ProIndicator.classList.remove('hidden'); stage3ProIndicator.classList.add('inline-block'); }
-        if (advToggleQuickLabel) advToggleQuickLabel.textContent = "Switch to Standard";
         showToast('Pro Mode Enabled');
         startOscilloscope();
       } else {
         if (stdView) { stdView.classList.remove('hidden'); stdView.classList.add('block'); }
         if (advView) { advView.classList.remove('block'); advView.classList.add('hidden'); }
-        if (topProBtn) topProBtn.className = "flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-neutral-100/80 hover:bg-neutral-200/70 border border-black/[0.04] text-xs font-mono font-semibold text-neutral-700 hover:text-black shadow-sm transition-all";
-        if (topProDot) topProDot.className = "w-1.5 h-1.5 rounded-full bg-neutral-400 transition-colors";
-        if (topProText) topProText.textContent = "PRO";
-        if (stage3ProIndicator) { stage3ProIndicator.classList.remove('inline-block'); stage3ProIndicator.classList.add('hidden'); }
-        if (advToggleQuickLabel) advToggleQuickLabel.textContent = "Switch to Pro";
         showToast('Standard Mode Active');
       }
       lucide.createIcons();
@@ -2845,7 +2850,17 @@ void loop() {
       closeCustomAgentModal();
     }
 
-    function openPersonaModal() { document.getElementById('personaModal').classList.remove('hidden'); }
+    function openPersonaModal() {
+      const toggle = document.getElementById('modalProToggle');
+      const badge = document.getElementById('modalProBadge');
+      const isAdv = state.designMode === 'advanced';
+      if (toggle) toggle.checked = isAdv;
+      if (badge) {
+        badge.textContent = isAdv ? 'ACTIVE' : 'OFF';
+        badge.className = isAdv ? 'text-[9px] bg-black text-white px-1.5 py-0.5 rounded font-bold' : 'text-[9px] bg-neutral-200 text-neutral-700 px-1.5 py-0.5 rounded font-semibold';
+      }
+      document.getElementById('personaModal').classList.remove('hidden');
+    }
     function closePersonaModal() { document.getElementById('personaModal').classList.add('hidden'); }
     
     function selectPersona(p) {
