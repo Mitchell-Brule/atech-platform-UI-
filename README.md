@@ -55,11 +55,11 @@ Backed by **$800K Pre-Seed** from **Emblem, Nordic Makers, Lovable, Sequoia, and
 ---
 
 ### 5. 👥 The Ateam
-* **Tomas Harmer** — CEO • Vision & Strategy
-* **David Stålmarck** — CTO • AI & Software
-* **Mitchell Brule** — Mitchify
+* **Tomas Harmer** — Co-founder & CEO • Vision & Strategy
+* **David Stålmarck** — Co-founder & CTO • AI & Software
 * **Gustav Hugod** — Head of Sales & Growth
 * **Julius Thunström** — Head of AI/ML
+* **Mitchell Brule** — Mitchify
 
 ---
 
