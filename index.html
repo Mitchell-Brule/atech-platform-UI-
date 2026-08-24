@@ -132,23 +132,6 @@
 <body class="min-h-screen flex flex-col antialiased selection:bg-neutral-900 selection:text-white">
 
   <!-- ========================================================================= -->
-  <!-- TOP INVESTOR ANNOUNCEMENT BANNER (as seen on atech.dev) -->
-  <!-- ========================================================================= -->
-  <div class="bg-black text-white px-4 py-2 text-xs border-b border-white/10 overflow-hidden">
-    <div class="max-w-6xl mx-auto flex items-center justify-between gap-4 font-mono text-[11px]">
-      <div class="flex items-center gap-3">
-        <span class="text-neutral-400 font-bold uppercase tracking-wider text-[10px]">BACKED BY</span>
-        <span class="text-neutral-200">Emblem • Nordic Makers • Lovable • Sequoia • a16z</span>
-        <span class="hidden sm:inline-block text-emerald-400 font-bold">($800K Pre-Seed)</span>
-      </div>
-      <a href="#about" onclick="switchPage('about')" class="text-neutral-400 hover:text-white flex items-center gap-1 shrink-0 font-medium">
-        <span>Read announcement</span>
-        <i data-lucide="arrow-right" class="w-3 h-3"></i>
-      </a>
-    </div>
-  </div>
-
-  <!-- ========================================================================= -->
   <!-- HEADER -->
   <!-- ========================================================================= -->
   <header class="sticky top-0 z-40 bg-white/85 backdrop-blur-xl border-b border-black/[0.04] transition-all">
@@ -184,7 +167,14 @@
       </nav>
 
       <!-- Right Actions -->
-      <div class="flex items-center gap-2.5">
+      <div class="flex items-center gap-2">
+        
+        <!-- Sleek Undercover PRO Mode Toggle -->
+        <button id="topProBtn" onclick="toggleProMode()" class="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-neutral-100/80 hover:bg-neutral-200/70 border border-black/[0.04] text-xs font-mono font-semibold text-neutral-700 hover:text-black shadow-sm transition-all">
+          <span id="topProDot" class="w-1.5 h-1.5 rounded-full bg-neutral-400 transition-colors"></span>
+          <span id="topProText">PRO</span>
+        </button>
+
         <button onclick="openPersonaModal()" class="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-neutral-100/80 hover:bg-neutral-200/70 border border-black/[0.04] text-xs font-medium text-neutral-800 shadow-sm transition-all">
           <i data-lucide="user" class="w-3.5 h-3.5 text-neutral-500"></i>
           <span id="headerPersonaLabel" class="font-bold text-neutral-900">Hobbyist</span>
@@ -233,8 +223,8 @@
     <!-- ======================================================================= -->
     <section id="page-design" class="space-y-8 block">
 
-      <!-- Flow Tracker -->
-      <div id="designStageTracker" class="bg-white rounded-full p-1.5 border border-black/[0.05] shadow-[0_2px_8px_-2px_rgba(0,0,0,0.03)] max-w-lg mx-auto flex items-center justify-between text-xs font-mono">
+      <!-- Flow Tracker (Clean 3-Step Creation Pipeline) -->
+      <div id="designStageTracker" class="bg-white rounded-full p-1.5 border border-black/[0.05] shadow-[0_2px_8px_-2px_rgba(0,0,0,0.03)] max-w-sm mx-auto flex items-center justify-between text-xs font-mono">
         <button onclick="goToStage(1)" id="flow-btn-1" class="flex-1 py-1.5 px-3 rounded-full bg-black text-white font-bold transition-all text-center">
           1. Prompt
         </button>
@@ -245,10 +235,6 @@
         <span class="text-neutral-300">→</span>
         <button onclick="goToStage(3)" id="flow-btn-3" class="flex-1 py-1.5 px-3 rounded-full text-neutral-500 hover:text-black transition-all text-center">
           3. Design
-        </button>
-        <span class="text-neutral-300">→</span>
-        <button onclick="goToStage(4)" id="flow-btn-4" class="flex-1 py-1.5 px-3 rounded-full text-neutral-500 hover:text-black transition-all text-center">
-          4. Buy
         </button>
       </div>
 
@@ -405,44 +391,43 @@
       <!-- ================= STAGE 3: DESIGN (STANDARD & ADVANCED MODES) ================= -->
       <div id="stage-3" class="space-y-6 hidden">
         
-        <!-- Header with Standard / Advanced Mode Switcher -->
-        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-2 border-b border-black/[0.06]">
-          <div class="flex flex-wrap items-center gap-3">
-            <h2 class="text-lg font-bold text-neutral-900">Design Studio</h2>
-            
-            <!-- Mode Toggle Switcher -->
-            <div class="bg-neutral-100 p-1 rounded-full border border-black/[0.04] flex items-center text-xs font-mono">
-              <button id="btn-design-mode-std" onclick="setDesignMode('standard')" class="px-3 py-1 rounded-full bg-black text-white font-bold transition-all flex items-center gap-1 shadow-sm">
-                <span>⚡ Standard</span>
-              </button>
-              <button id="btn-design-mode-adv" onclick="setDesignMode('advanced')" class="px-3 py-1 rounded-full text-neutral-600 hover:text-black font-semibold transition-all flex items-center gap-1">
-                <i data-lucide="sliders" class="w-3 h-3 text-indigo-500"></i>
-                <span>🛠️ Advanced Mode</span>
-              </button>
-            </div>
+        <!-- Header with Sleek Undercover Pro Status -->
+        <div class="flex items-center justify-between pb-2 border-b border-black/[0.06]">
+          <div class="flex items-center gap-2.5">
+            <h2 class="text-lg font-bold text-neutral-900">Design System</h2>
+            <span id="stage3ProIndicator" class="hidden text-[10px] font-mono bg-neutral-900 text-yellow-300 font-bold px-2 py-0.5 rounded-full">PRO ACTIVE</span>
           </div>
-
-          <button onclick="goToStage(4)" class="px-4 py-2 rounded-full bg-black text-white text-xs font-semibold hover:opacity-85 flex items-center gap-1.5 shadow-sm self-start sm:self-auto">
-            <span>Buy Kit →</span>
+          <button id="advToggleQuick" onclick="toggleProMode()" class="text-xs font-mono text-neutral-400 hover:text-black flex items-center gap-1 transition-colors">
+            <span id="advToggleQuickLabel">Switch to Pro</span>
+            <i data-lucide="sliders" class="w-3 h-3 text-neutral-500"></i>
           </button>
         </div>
 
         <!-- ================= STANDARD DESIGN VIEW ================= -->
         <div id="stage-3-standard" class="space-y-6 block">
           
-          <!-- 4 Pillar Tabs -->
-          <div class="flex items-center gap-1.5 bg-neutral-200/60 p-1 rounded-2xl max-w-xl">
-            <button onclick="switchDesignPillar('cad')" id="pill-tab-cad" class="flex-1 py-1.5 rounded-xl bg-white text-neutral-900 font-bold text-xs shadow-sm transition-all text-center">
-              1. CAD
-            </button>
-            <button onclick="switchDesignPillar('elec')" id="pill-tab-elec" class="flex-1 py-1.5 rounded-xl text-neutral-600 hover:text-neutral-900 font-medium text-xs transition-all text-center">
-              2. Wiring
-            </button>
-            <button onclick="switchDesignPillar('firm')" id="pill-tab-firm" class="flex-1 py-1.5 rounded-xl text-neutral-600 hover:text-neutral-900 font-medium text-xs transition-all text-center">
-              3. Firmware
-            </button>
-            <button onclick="switchDesignPillar('assembly')" id="pill-tab-assembly" class="flex-1 py-1.5 rounded-xl text-neutral-600 hover:text-neutral-900 font-medium text-xs transition-all text-center">
-              4. Assembly
+          <!-- 4 Pillar Tabs + Lateral Buy Button beside Assembly -->
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+            <div class="flex items-center gap-1.5 bg-neutral-200/60 p-1 rounded-2xl max-w-xl flex-1">
+              <button onclick="switchDesignPillar('cad')" id="pill-tab-cad" class="flex-1 py-1.5 rounded-xl bg-white text-neutral-900 font-bold text-xs shadow-sm transition-all text-center">
+                1. CAD
+              </button>
+              <button onclick="switchDesignPillar('elec')" id="pill-tab-elec" class="flex-1 py-1.5 rounded-xl text-neutral-600 hover:text-neutral-900 font-medium text-xs transition-all text-center">
+                2. Wiring
+              </button>
+              <button onclick="switchDesignPillar('firm')" id="pill-tab-firm" class="flex-1 py-1.5 rounded-xl text-neutral-600 hover:text-neutral-900 font-medium text-xs transition-all text-center">
+                3. Firmware
+              </button>
+              <button onclick="switchDesignPillar('assembly')" id="pill-tab-assembly" class="flex-1 py-1.5 rounded-xl text-neutral-600 hover:text-neutral-900 font-medium text-xs transition-all text-center">
+                4. Assembly
+              </button>
+            </div>
+
+            <!-- Lateral Buy Button beside assembly -->
+            <button onclick="goToStage(4)" class="px-4 py-2.5 rounded-2xl bg-black hover:bg-neutral-800 text-white text-xs font-semibold shadow-sm transition-all flex items-center justify-center gap-1.5 shrink-0">
+              <i data-lucide="shopping-bag" class="w-3.5 h-3.5"></i>
+              <span>Buy Kit</span>
+              <i data-lucide="arrow-right" class="w-3 h-3"></i>
             </button>
           </div>
 
@@ -615,23 +600,32 @@ void loop() {
         <!-- ================= ADVANCED DESIGN VIEW ================= -->
         <div id="stage-3-advanced" class="space-y-6 hidden">
           
-          <!-- Advanced Sub-Nav Tabs -->
-          <div class="flex flex-wrap items-center gap-1.5 bg-neutral-100 p-1.5 rounded-2xl border border-black/[0.04] text-xs font-mono">
-            <button onclick="switchAdvancedTab('cad')" id="adv-tab-cad" class="px-4 py-1.5 rounded-xl bg-black text-white font-bold transition-all flex items-center gap-1.5 shadow-sm">
-              <i data-lucide="box" class="w-3.5 h-3.5"></i>
-              <span>Parametric B-Rep CAD</span>
-            </button>
-            <button onclick="switchAdvancedTab('pinout')" id="adv-tab-pinout" class="px-4 py-1.5 rounded-xl text-neutral-600 hover:text-black font-semibold transition-all flex items-center gap-1.5">
-              <i data-lucide="cpu" class="w-3.5 h-3.5"></i>
-              <span>14-Port Bus &amp; Power</span>
-            </button>
-            <button onclick="switchAdvancedTab('firmware')" id="adv-tab-firmware" class="px-4 py-1.5 rounded-xl text-neutral-600 hover:text-black font-semibold transition-all flex items-center gap-1.5">
-              <i data-lucide="terminal" class="w-3.5 h-3.5"></i>
-              <span>RTOS &amp; WebSerial Studio</span>
-            </button>
-            <button onclick="switchAdvancedTab('dfm')" id="adv-tab-dfm" class="px-4 py-1.5 rounded-xl text-neutral-600 hover:text-black font-semibold transition-all flex items-center gap-1.5">
-              <i data-lucide="check-square" class="w-3.5 h-3.5"></i>
-              <span>DFM &amp; GD&amp;T Audit</span>
+          <!-- Advanced Sub-Nav Tabs + Lateral Buy Button -->
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+            <div class="flex flex-wrap items-center gap-1.5 bg-neutral-100 p-1.5 rounded-2xl border border-black/[0.04] text-xs font-mono flex-1">
+              <button onclick="switchAdvancedTab('cad')" id="adv-tab-cad" class="px-3.5 py-1.5 rounded-xl bg-black text-white font-bold transition-all flex items-center gap-1.5 shadow-sm">
+                <i data-lucide="box" class="w-3.5 h-3.5"></i>
+                <span>Parametric CAD</span>
+              </button>
+              <button onclick="switchAdvancedTab('pinout')" id="adv-tab-pinout" class="px-3.5 py-1.5 rounded-xl text-neutral-600 hover:text-black font-semibold transition-all flex items-center gap-1.5">
+                <i data-lucide="cpu" class="w-3.5 h-3.5"></i>
+                <span>14-Port Bus</span>
+              </button>
+              <button onclick="switchAdvancedTab('firmware')" id="adv-tab-firmware" class="px-3.5 py-1.5 rounded-xl text-neutral-600 hover:text-black font-semibold transition-all flex items-center gap-1.5">
+                <i data-lucide="terminal" class="w-3.5 h-3.5"></i>
+                <span>RTOS &amp; Scope</span>
+              </button>
+              <button onclick="switchAdvancedTab('dfm')" id="adv-tab-dfm" class="px-3.5 py-1.5 rounded-xl text-neutral-600 hover:text-black font-semibold transition-all flex items-center gap-1.5">
+                <i data-lucide="check-square" class="w-3.5 h-3.5"></i>
+                <span>DFM Audit</span>
+              </button>
+            </div>
+
+            <!-- Lateral Buy Button beside Advanced Bar -->
+            <button onclick="goToStage(4)" class="px-4 py-2.5 rounded-2xl bg-black hover:bg-neutral-800 text-white text-xs font-semibold shadow-sm transition-all flex items-center justify-center gap-1.5 shrink-0">
+              <i data-lucide="shopping-bag" class="w-3.5 h-3.5"></i>
+              <span>Buy Kit</span>
+              <i data-lucide="arrow-right" class="w-3 h-3"></i>
             </button>
           </div>
 
@@ -2606,26 +2600,40 @@ void loop() {
       lucide.createIcons();
     }
 
+    function toggleProMode() {
+      const isAdv = state.designMode === 'advanced';
+      setDesignMode(isAdv ? 'standard' : 'advanced');
+    }
+
     function setDesignMode(mode) {
       state.designMode = mode;
       const stdView = document.getElementById('stage-3-standard');
       const advView = document.getElementById('stage-3-advanced');
-      const btnStd = document.getElementById('btn-design-mode-std');
-      const btnAdv = document.getElementById('btn-design-mode-adv');
+      const topProBtn = document.getElementById('topProBtn');
+      const topProDot = document.getElementById('topProDot');
+      const topProText = document.getElementById('topProText');
+      const stage3ProIndicator = document.getElementById('stage3ProIndicator');
+      const advToggleQuickLabel = document.getElementById('advToggleQuickLabel');
 
       if (mode === 'advanced') {
         if (stdView) { stdView.classList.remove('block'); stdView.classList.add('hidden'); }
         if (advView) { advView.classList.remove('hidden'); advView.classList.add('block'); }
-        if (btnStd) btnStd.className = "px-3 py-1 rounded-full text-neutral-600 hover:text-black font-semibold transition-all flex items-center gap-1";
-        if (btnAdv) btnAdv.className = "px-3 py-1 rounded-full bg-black text-white font-bold transition-all flex items-center gap-1 shadow-sm";
-        showToast('Switched to Advanced Design Mode');
+        if (topProBtn) topProBtn.className = "flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-black text-white border border-black text-xs font-mono font-semibold shadow-sm transition-all";
+        if (topProDot) topProDot.className = "w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse";
+        if (topProText) topProText.textContent = "PRO ACTIVE";
+        if (stage3ProIndicator) { stage3ProIndicator.classList.remove('hidden'); stage3ProIndicator.classList.add('inline-block'); }
+        if (advToggleQuickLabel) advToggleQuickLabel.textContent = "Switch to Standard";
+        showToast('Pro Mode Enabled');
         startOscilloscope();
       } else {
         if (stdView) { stdView.classList.remove('hidden'); stdView.classList.add('block'); }
         if (advView) { advView.classList.remove('block'); advView.classList.add('hidden'); }
-        if (btnStd) btnStd.className = "px-3 py-1 rounded-full bg-black text-white font-bold transition-all flex items-center gap-1 shadow-sm";
-        if (btnAdv) btnAdv.className = "px-3 py-1 rounded-full text-neutral-600 hover:text-black font-semibold transition-all flex items-center gap-1";
-        showToast('Switched to Standard Design Mode');
+        if (topProBtn) topProBtn.className = "flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-neutral-100/80 hover:bg-neutral-200/70 border border-black/[0.04] text-xs font-mono font-semibold text-neutral-700 hover:text-black shadow-sm transition-all";
+        if (topProDot) topProDot.className = "w-1.5 h-1.5 rounded-full bg-neutral-400 transition-colors";
+        if (topProText) topProText.textContent = "PRO";
+        if (stage3ProIndicator) { stage3ProIndicator.classList.remove('inline-block'); stage3ProIndicator.classList.add('hidden'); }
+        if (advToggleQuickLabel) advToggleQuickLabel.textContent = "Switch to Pro";
+        showToast('Standard Mode Active');
       }
       lucide.createIcons();
     }
