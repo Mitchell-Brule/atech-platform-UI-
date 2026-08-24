@@ -30,17 +30,36 @@ Backed by **$800K Pre-Seed** from **Emblem, Nordic Makers, Lovable, Sequoia, and
 
 ---
 
-### 2. 👥 Strict Profile Isolation
+### 2. ⚡ Pro Studio Mode & Undercover Toggle
+* Discreet **Pro Mode** toggle in the profile dropdown modal.
+* **Parametric Solid B-Rep CAD Engine**: Real-time sliders for wall thickness, mold draft angles, brass standoff engagement, snap cantilever clearance, and fillet radii.
+* **14-Port Dynamic Bus Multiplexer & Power Matrix**: Live I2C address conflict resolver, 3.3V/5V load auditor, and 500mAh LiPo battery life calculator.
+* **RTOS Multi-Core Studio & Live WebSerial Oscilloscope**: Real-time dual-channel waveform streamer for sensor telemetry.
+* **DFM & GD&T Tolerance Audit**: ISO 2768-m medium tolerance stackup and 2-plate mold pull vector verification.
+
+---
+
+### 3. 👥 Strict Profile Isolation
 * 🎓 **Student & 🛠️ Hobbyist**: Identical standard maker studios.
 * 🏫 **Teacher**: Exclusive **Programs** portal with Kahoot-style classroom join room PIN (`849-210`), student tool scaffolding policies, and vetted syllabi matcher.
 * 🏭 **Industry**: Exclusive **Enterprise** portal with GD&T tolerance checks, STEP AP242 with PMI, dedicated TinyML edge-AI integration contracts, and a 100 Hz live streaming telemetry demo.
 
 ---
 
-### 3. 🌐 Community Hub & Stay Connected
-* Community build showcase, idea bank, and project voting.
+### 4. 🌐 Community Hub & Stay Connected
+* **Rich Showcase**: Community builds with high-res mock hardware photos, rating stars, live remix counts, and like counters.
+* **Idea Voting**: 1,500-vote threshold to trigger hardware manufacturing.
 * **Stay Connected**: Direct links to Discord (4.2k Makers), GitHub (Open Source SDK), YouTube (Teardowns), X (@atech_dev), LinkedIn, and Instagram (@atech.dev).
-* Creator Module Bounties ($1,500 + 12% revenue royalties).
+* **Creator Module Bounties**: $1,500 + 12% revenue royalties for community hardware designs.
+
+---
+
+### 5. 👥 The Ateam
+* **Tomas Harmer** — CEO • Vision & Strategy
+* **David Stålmarck** — CTO • AI & Software
+* **Mitchell Brule** — Mitchify
+* **Gustav Hugod** — Head of Sales & Growth
+* **Julius Thunström** — Head of AI/ML
 
 ---
 
