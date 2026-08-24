@@ -2096,27 +2096,30 @@ void loop() {
   <!-- Persona Modal -->
   <div id="personaModal" class="fixed inset-0 bg-black/40 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
     <div class="bg-white max-w-sm w-full rounded-3xl p-5 border border-black/[0.08] shadow-2xl space-y-3.5 text-xs">
-      <div class="flex items-center justify-between border-b border-black/[0.06] pb-2">
+      
+      <!-- Header with Select Profile and Pro toggle beside X -->
+      <div class="flex items-center justify-between border-b border-black/[0.06] pb-2.5">
         <h3 class="font-bold text-neutral-900 text-sm">Select Profile</h3>
-        <button onclick="closePersonaModal()" class="text-neutral-400 hover:text-neutral-800"><i data-lucide="x" class="w-4 h-4"></i></button>
-      </div>
-
-      <!-- Slide Switch for Pro at Top of Select Profile -->
-      <div class="flex items-center justify-between p-3 rounded-2xl bg-neutral-50 border border-black/[0.06] transition-all">
-        <div class="space-y-0.5">
-          <div class="flex items-center gap-1.5 font-bold text-neutral-900 text-xs font-mono">
-            <span>PRO</span>
-            <span id="modalProBadge" class="text-[9px] bg-neutral-200 text-neutral-700 px-1.5 py-0.5 rounded font-semibold">OFF</span>
+        
+        <div class="flex items-center gap-3">
+          <!-- Minimal Pro Toggle beside X -->
+          <div class="flex items-center gap-1.5">
+            <span class="text-[11px] font-mono font-bold text-neutral-600">Pro</span>
+            <label class="relative inline-flex items-center cursor-pointer">
+              <input type="checkbox" id="modalProToggle" onchange="toggleProSlide(this.checked)" class="sr-only peer" />
+              <div class="w-7 h-4 bg-neutral-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-neutral-300 after:border after:rounded-full after:h-3 after:w-3 after:transition-all peer-checked:bg-black"></div>
+            </label>
           </div>
-          <p class="text-[10px] text-neutral-400">Parametric CAD, 14-Port Matrix &amp; RTOS</p>
-        </div>
 
-        <label class="relative inline-flex items-center cursor-pointer">
-          <input type="checkbox" id="modalProToggle" onchange="toggleProSlide(this.checked)" class="sr-only peer" />
-          <div class="w-9 h-5 bg-neutral-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-neutral-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-black"></div>
-        </label>
+          <div class="w-px h-3.5 bg-neutral-200"></div>
+
+          <button onclick="closePersonaModal()" class="text-neutral-400 hover:text-neutral-800 p-0.5 rounded-lg hover:bg-neutral-100 transition-colors">
+            <i data-lucide="x" class="w-4 h-4"></i>
+          </button>
+        </div>
       </div>
 
+      <!-- 4 Profiles: Student, Hobbyist, Teacher, Industry -->
       <div class="grid grid-cols-2 gap-2">
         <div onclick="selectPersona('Student')" id="p-Student" class="p-3 rounded-2xl bg-neutral-50 border border-black/[0.06] cursor-pointer text-center font-semibold transition-all">
           <div>🎓 Student</div>
@@ -2608,11 +2611,6 @@ void loop() {
     }
 
     function toggleProSlide(checked) {
-      const badge = document.getElementById('modalProBadge');
-      if (badge) {
-        badge.textContent = checked ? 'ACTIVE' : 'OFF';
-        badge.className = checked ? 'text-[9px] bg-black text-white px-1.5 py-0.5 rounded font-bold' : 'text-[9px] bg-neutral-200 text-neutral-700 px-1.5 py-0.5 rounded font-semibold';
-      }
       setDesignMode(checked ? 'advanced' : 'standard');
     }
 
@@ -2621,14 +2619,9 @@ void loop() {
       const stdView = document.getElementById('stage-3-standard');
       const advView = document.getElementById('stage-3-advanced');
       const toggle = document.getElementById('modalProToggle');
-      const badge = document.getElementById('modalProBadge');
 
       const isAdv = mode === 'advanced';
       if (toggle) toggle.checked = isAdv;
-      if (badge) {
-        badge.textContent = isAdv ? 'ACTIVE' : 'OFF';
-        badge.className = isAdv ? 'text-[9px] bg-black text-white px-1.5 py-0.5 rounded font-bold' : 'text-[9px] bg-neutral-200 text-neutral-700 px-1.5 py-0.5 rounded font-semibold';
-      }
 
       if (isAdv) {
         if (stdView) { stdView.classList.remove('block'); stdView.classList.add('hidden'); }
@@ -2852,13 +2845,7 @@ void loop() {
 
     function openPersonaModal() {
       const toggle = document.getElementById('modalProToggle');
-      const badge = document.getElementById('modalProBadge');
-      const isAdv = state.designMode === 'advanced';
-      if (toggle) toggle.checked = isAdv;
-      if (badge) {
-        badge.textContent = isAdv ? 'ACTIVE' : 'OFF';
-        badge.className = isAdv ? 'text-[9px] bg-black text-white px-1.5 py-0.5 rounded font-bold' : 'text-[9px] bg-neutral-200 text-neutral-700 px-1.5 py-0.5 rounded font-semibold';
-      }
+      if (toggle) toggle.checked = state.designMode === 'advanced';
       document.getElementById('personaModal').classList.remove('hidden');
     }
     function closePersonaModal() { document.getElementById('personaModal').classList.add('hidden'); }
