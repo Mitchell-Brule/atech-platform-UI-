@@ -1,0 +1,12 @@
+{
+  "name": "atech-mock-ui",
+  "version": "1.0.0",
+  "description": "Interactive Mock UI for Atech - Prompt to Product AI Hardware Platform",
+  "scripts": {
+    "start": "python server.py",
+    "serve": "npx serve -l 8088"
+  },
+  "keywords": ["atech", "cad", "hardware", "prompt-to-product", "threejs", "ui-mockup"],
+  "author": "Atech",
+  "license": "MIT"
+}
