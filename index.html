@@ -402,93 +402,111 @@
 
       </div>
 
-      <!-- ================= STAGE 3: DESIGN (4 PARTS) ================= -->
+      <!-- ================= STAGE 3: DESIGN (STANDARD & ADVANCED MODES) ================= -->
       <div id="stage-3" class="space-y-6 hidden">
         
-        <div class="flex items-center justify-between pb-2 border-b border-black/[0.06]">
-          <h2 class="text-lg font-bold text-neutral-900">Design System (4 Parts)</h2>
-          <button onclick="goToStage(4)" class="px-4 py-2 rounded-full bg-black text-white text-xs font-semibold hover:opacity-85 flex items-center gap-1.5 shadow-sm">
+        <!-- Header with Standard / Advanced Mode Switcher -->
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-2 border-b border-black/[0.06]">
+          <div class="flex flex-wrap items-center gap-3">
+            <h2 class="text-lg font-bold text-neutral-900">Design Studio</h2>
+            
+            <!-- Mode Toggle Switcher -->
+            <div class="bg-neutral-100 p-1 rounded-full border border-black/[0.04] flex items-center text-xs font-mono">
+              <button id="btn-design-mode-std" onclick="setDesignMode('standard')" class="px-3 py-1 rounded-full bg-black text-white font-bold transition-all flex items-center gap-1 shadow-sm">
+                <span>⚡ Standard</span>
+              </button>
+              <button id="btn-design-mode-adv" onclick="setDesignMode('advanced')" class="px-3 py-1 rounded-full text-neutral-600 hover:text-black font-semibold transition-all flex items-center gap-1">
+                <i data-lucide="sliders" class="w-3 h-3 text-indigo-500"></i>
+                <span>🛠️ Advanced Mode</span>
+              </button>
+            </div>
+          </div>
+
+          <button onclick="goToStage(4)" class="px-4 py-2 rounded-full bg-black text-white text-xs font-semibold hover:opacity-85 flex items-center gap-1.5 shadow-sm self-start sm:self-auto">
             <span>Buy Kit →</span>
           </button>
         </div>
 
-        <!-- 4 Pillar Tabs -->
-        <div class="flex items-center gap-1.5 bg-neutral-200/60 p-1 rounded-2xl max-w-xl">
-          <button onclick="switchDesignPillar('cad')" id="pill-tab-cad" class="flex-1 py-1.5 rounded-xl bg-white text-neutral-900 font-bold text-xs shadow-sm transition-all text-center">
-            1. CAD
-          </button>
-          <button onclick="switchDesignPillar('elec')" id="pill-tab-elec" class="flex-1 py-1.5 rounded-xl text-neutral-600 hover:text-neutral-900 font-medium text-xs transition-all text-center">
-            2. Wiring
-          </button>
-          <button onclick="switchDesignPillar('firm')" id="pill-tab-firm" class="flex-1 py-1.5 rounded-xl text-neutral-600 hover:text-neutral-900 font-medium text-xs transition-all text-center">
-            3. Firmware
-          </button>
-          <button onclick="switchDesignPillar('assembly')" id="pill-tab-assembly" class="flex-1 py-1.5 rounded-xl text-neutral-600 hover:text-neutral-900 font-medium text-xs transition-all text-center">
-            4. Assembly
-          </button>
-        </div>
+        <!-- ================= STANDARD DESIGN VIEW ================= -->
+        <div id="stage-3-standard" class="space-y-6 block">
+          
+          <!-- 4 Pillar Tabs -->
+          <div class="flex items-center gap-1.5 bg-neutral-200/60 p-1 rounded-2xl max-w-xl">
+            <button onclick="switchDesignPillar('cad')" id="pill-tab-cad" class="flex-1 py-1.5 rounded-xl bg-white text-neutral-900 font-bold text-xs shadow-sm transition-all text-center">
+              1. CAD
+            </button>
+            <button onclick="switchDesignPillar('elec')" id="pill-tab-elec" class="flex-1 py-1.5 rounded-xl text-neutral-600 hover:text-neutral-900 font-medium text-xs transition-all text-center">
+              2. Wiring
+            </button>
+            <button onclick="switchDesignPillar('firm')" id="pill-tab-firm" class="flex-1 py-1.5 rounded-xl text-neutral-600 hover:text-neutral-900 font-medium text-xs transition-all text-center">
+              3. Firmware
+            </button>
+            <button onclick="switchDesignPillar('assembly')" id="pill-tab-assembly" class="flex-1 py-1.5 rounded-xl text-neutral-600 hover:text-neutral-900 font-medium text-xs transition-all text-center">
+              4. Assembly
+            </button>
+          </div>
 
-        <!-- Pillar 1: CAD -->
-        <div id="pillar-cad" class="space-y-4 block">
-          <div class="atech-card p-5 rounded-3xl space-y-4">
-            <div class="flex items-center justify-between border-b border-black/[0.06] pb-2">
-              <h3 class="font-bold text-neutral-900 text-sm">CAD Enclosure</h3>
-              <span class="text-xs font-mono bg-neutral-100 text-neutral-800 px-2.5 py-0.5 rounded-full font-bold" id="cadPillarBadge">3D PRINT READY</span>
-            </div>
+          <!-- Pillar 1: CAD -->
+          <div id="pillar-cad" class="space-y-4 block">
+            <div class="atech-card p-5 rounded-3xl space-y-4">
+              <div class="flex items-center justify-between border-b border-black/[0.06] pb-2">
+                <h3 class="font-bold text-neutral-900 text-sm">CAD Enclosure</h3>
+                <span class="text-xs font-mono bg-neutral-100 text-neutral-800 px-2.5 py-0.5 rounded-full font-bold" id="cadPillarBadge">3D PRINT READY</span>
+              </div>
 
-            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs">
-              <div class="bg-neutral-50 p-3 rounded-2xl border border-black/[0.04]">
-                <div class="font-mono text-neutral-400 text-[10px]">MOUNTING</div>
-                <div class="font-bold text-neutral-900 mt-1" id="cadSpec1">4x M3 Brass Standoffs</div>
+              <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs">
+                <div class="bg-neutral-50 p-3 rounded-2xl border border-black/[0.04]">
+                  <div class="font-mono text-neutral-400 text-[10px]">MOUNTING</div>
+                  <div class="font-bold text-neutral-900 mt-1" id="cadSpec1">4x M3 Brass Standoffs</div>
+                </div>
+                <div class="bg-neutral-50 p-3 rounded-2xl border border-black/[0.04]">
+                  <div class="font-mono text-neutral-400 text-[10px]">PASSAGES</div>
+                  <div class="font-bold text-neutral-900 mt-1" id="cadSpec2">Ribbon Strain Relief</div>
+                </div>
+                <div class="bg-neutral-50 p-3 rounded-2xl border border-black/[0.04]">
+                  <div class="font-mono text-neutral-400 text-[10px]">TOLERANCE</div>
+                  <div class="font-bold text-neutral-900 mt-1" id="cadSpec3">0.25mm Snap Clearance</div>
+                </div>
               </div>
-              <div class="bg-neutral-50 p-3 rounded-2xl border border-black/[0.04]">
-                <div class="font-mono text-neutral-400 text-[10px]">PASSAGES</div>
-                <div class="font-bold text-neutral-900 mt-1" id="cadSpec2">Ribbon Strain Relief</div>
-              </div>
-              <div class="bg-neutral-50 p-3 rounded-2xl border border-black/[0.04]">
-                <div class="font-mono text-neutral-400 text-[10px]">TOLERANCE</div>
-                <div class="font-bold text-neutral-900 mt-1" id="cadSpec3">0.25mm Snap Clearance</div>
-              </div>
-            </div>
 
-            <div class="pt-2 flex flex-wrap items-center gap-2">
-              <button onclick="downloadFile('stl')" class="px-4 py-2 rounded-full bg-black text-white text-xs font-semibold hover:opacity-85 flex items-center gap-1.5">
-                <i data-lucide="download" class="w-3.5 h-3.5"></i>
-                <span id="cadDownloadBtn1">Download .STL</span>
-              </button>
-              <button onclick="downloadFile('step')" class="px-4 py-2 rounded-full bg-neutral-100 hover:bg-neutral-200 text-neutral-800 text-xs font-semibold flex items-center gap-1.5">
-                <i data-lucide="download" class="w-3.5 h-3.5"></i>
-                <span id="cadDownloadBtn2">Download .STEP</span>
-              </button>
-              <button onclick="openCreativeModeModal()" class="px-4 py-2 rounded-full bg-indigo-50 hover:bg-indigo-100 text-indigo-900 text-xs font-semibold flex items-center gap-1.5 border border-indigo-200">
-                <i data-lucide="external-link" class="w-3.5 h-3.5 text-indigo-600"></i>
-                <span>Creative Mode (SolidWorks / Fusion 360 / NX)</span>
-              </button>
+              <div class="pt-2 flex flex-wrap items-center gap-2">
+                <button onclick="downloadFile('stl')" class="px-4 py-2 rounded-full bg-black text-white text-xs font-semibold hover:opacity-85 flex items-center gap-1.5">
+                  <i data-lucide="download" class="w-3.5 h-3.5"></i>
+                  <span id="cadDownloadBtn1">Download .STL</span>
+                </button>
+                <button onclick="downloadFile('step')" class="px-4 py-2 rounded-full bg-neutral-100 hover:bg-neutral-200 text-neutral-800 text-xs font-semibold flex items-center gap-1.5">
+                  <i data-lucide="download" class="w-3.5 h-3.5"></i>
+                  <span id="cadDownloadBtn2">Download .STEP</span>
+                </button>
+                <button onclick="openCreativeModeModal()" class="px-4 py-2 rounded-full bg-indigo-50 hover:bg-indigo-100 text-indigo-900 text-xs font-semibold flex items-center gap-1.5 border border-indigo-200">
+                  <i data-lucide="external-link" class="w-3.5 h-3.5 text-indigo-600"></i>
+                  <span>Creative Mode (SolidWorks / Fusion 360 / NX)</span>
+                </button>
+              </div>
             </div>
           </div>
-        </div>
 
-        <!-- Pillar 2: Wiring -->
-        <div id="pillar-elec" class="space-y-4 hidden">
-          <div class="atech-card p-5 rounded-3xl space-y-3">
-            <div class="flex items-center justify-between border-b border-black/[0.06] pb-2">
-              <h3 class="font-bold text-neutral-900 text-sm">14-Port Wiring Map</h3>
-              <span class="text-xs font-mono text-emerald-600 font-bold">AUTO-MAPPED</span>
+          <!-- Pillar 2: Wiring -->
+          <div id="pillar-elec" class="space-y-4 hidden">
+            <div class="atech-card p-5 rounded-3xl space-y-3">
+              <div class="flex items-center justify-between border-b border-black/[0.06] pb-2">
+                <h3 class="font-bold text-neutral-900 text-sm">14-Port Wiring Map</h3>
+                <span class="text-xs font-mono text-emerald-600 font-bold">AUTO-MAPPED</span>
+              </div>
+              <div class="space-y-2 pt-1" id="elecModulesList"></div>
             </div>
-            <div class="space-y-2 pt-1" id="elecModulesList"></div>
           </div>
-        </div>
 
-        <!-- Pillar 3: Firmware -->
-        <div id="pillar-firm" class="space-y-4 hidden">
-          <div class="atech-card p-5 rounded-3xl space-y-3">
-            <div class="flex items-center justify-between border-b border-black/[0.06] pb-2">
-              <h3 class="font-bold text-neutral-900 text-sm">C++ Firmware</h3>
-              <span class="text-xs font-mono bg-neutral-100 text-neutral-800 px-2.5 py-0.5 rounded-full font-bold">ATECH SDK</span>
-            </div>
+          <!-- Pillar 3: Firmware -->
+          <div id="pillar-firm" class="space-y-4 hidden">
+            <div class="atech-card p-5 rounded-3xl space-y-3">
+              <div class="flex items-center justify-between border-b border-black/[0.06] pb-2">
+                <h3 class="font-bold text-neutral-900 text-sm">C++ Firmware</h3>
+                <span class="text-xs font-mono bg-neutral-100 text-neutral-800 px-2.5 py-0.5 rounded-full font-bold">ATECH SDK</span>
+              </div>
 
-            <div class="bg-neutral-900 rounded-2xl p-4 font-mono text-xs text-neutral-200 h-48 overflow-y-auto">
-              <pre><code class="text-emerald-400">// Atech 14-Port Microcontroller Firmware
+              <div class="bg-neutral-900 rounded-2xl p-4 font-mono text-xs text-neutral-200 h-48 overflow-y-auto">
+                <pre><code class="text-emerald-400">// Atech 14-Port Microcontroller Firmware
 #include &lt;atech.h&gt;
 
 AtechController atech(BOARD_14P);
@@ -511,85 +529,470 @@ void loop() {
     audio_out.stop();
   }
 }</code></pre>
-            </div>
-
-            <div class="flex flex-wrap items-center gap-2 pt-1">
-              <button onclick="flashWebUsb()" id="btnFlashWebUsb" class="px-5 py-2 rounded-full bg-black text-white text-xs font-semibold hover:opacity-85 flex items-center gap-1.5">
-                <i data-lucide="zap" class="w-3.5 h-3.5 text-yellow-400"></i>
-                <span id="flashBtnText">Flash WebUSB (COM12)</span>
-              </button>
-              <button onclick="openTerminalExportModal()" class="px-4 py-2 rounded-full bg-neutral-100 hover:bg-neutral-200 text-neutral-900 text-xs font-semibold flex items-center gap-1.5">
-                <i data-lucide="terminal" class="w-3.5 h-3.5"></i>
-                <span>Terminal / CLI Export</span>
-              </button>
-              <div id="flashStatusLog" class="text-xs font-mono text-neutral-400 ml-2">Ready</div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Pillar 4: Assembly Schematic -->
-        <div id="pillar-assembly" class="space-y-4 hidden">
-          <div class="atech-card p-5 rounded-3xl space-y-4">
-            <div class="flex items-center justify-between border-b border-black/[0.06] pb-2">
-              <h3 class="font-bold text-neutral-900 text-sm">Exploded Assembly Schematic</h3>
-              <button onclick="downloadSchematicPdf()" class="px-3.5 py-1.5 rounded-full bg-black text-white text-xs font-medium hover:opacity-85 flex items-center gap-1">
-                <i data-lucide="download" class="w-3 h-3"></i>
-                <span>Download PDF</span>
-              </button>
-            </div>
-
-            <div class="blueprint-grid rounded-2xl border border-neutral-300 p-4">
-              <div class="flex items-center justify-between text-[10px] font-mono text-neutral-500 border-b border-neutral-200 pb-2">
-                <span>ATECH-ASM-001</span>
-                <span id="blueprintMethodText" class="font-bold text-black">3D PRINT (FDM)</span>
-                <span>SCALE 1:1</span>
               </div>
 
-              <!-- SVG Schematic -->
-              <svg class="w-full max-w-xl h-64 mx-auto my-3" viewBox="0 0 500 320" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <!-- Top Lid -->
-                <path d="M120 70 L250 20 L380 70 L250 120 Z" fill="#f1f5f9" stroke="#0f172a" stroke-width="2" />
-                <circle cx="410" cy="70" r="10" fill="#000" /><text x="410" y="73.5" fill="#fff" font-size="9" font-weight="bold" font-family="monospace" text-anchor="middle">6</text>
-                <!-- Sensor -->
-                <rect x="235" y="115" width="30" height="15" rx="3" fill="#0284c7" stroke="#0369a1" stroke-width="1.5" />
-                <circle cx="80" cy="130" r="10" fill="#000" /><text x="80" y="133.5" fill="#fff" font-size="9" font-weight="bold" font-family="monospace" text-anchor="middle">5</text>
-                <!-- Wires -->
-                <path d="M220 180 C200 150, 180 155, 160 145" stroke="#0284c7" stroke-width="2" fill="none" />
-                <circle cx="80" cy="175" r="10" fill="#000" /><text x="80" y="178.5" fill="#fff" font-size="9" font-weight="bold" font-family="monospace" text-anchor="middle">4</text>
-                <!-- PCB -->
-                <path d="M150 185 L250 145 L350 185 L250 225 Z" fill="#15803d" stroke="#14532d" stroke-width="2" />
-                <circle cx="410" cy="185" r="10" fill="#000" /><text x="410" y="188.5" fill="#fff" font-size="9" font-weight="bold" font-family="monospace" text-anchor="middle">3</text>
-                <!-- Standoffs -->
-                <rect x="178" y="225" width="4" height="10" fill="#d97706" />
-                <rect x="318" y="225" width="4" height="10" fill="#d97706" />
-                <circle cx="410" cy="235" r="10" fill="#000" /><text x="410" y="238.5" fill="#fff" font-size="9" font-weight="bold" font-family="monospace" text-anchor="middle">2</text>
-                <!-- Base -->
-                <path d="M120 250 L250 200 L380 250 L250 300 Z" fill="#e2e8f0" stroke="#0f172a" stroke-width="2" />
-                <circle cx="80" cy="270" r="10" fill="#000" /><text x="80" y="273.5" fill="#fff" font-size="9" font-weight="bold" font-family="monospace" text-anchor="middle">1</text>
-              </svg>
-
-              <!-- Short BOM Table -->
-              <table class="w-full text-left font-mono text-[10px] text-neutral-600 border-t border-neutral-200 pt-2">
-                <thead>
-                  <tr class="text-neutral-900 border-b border-neutral-200">
-                    <th class="py-1">#</th>
-                    <th class="py-1">Part</th>
-                    <th class="py-1">Qty</th>
-                    <th class="py-1">Spec</th>
-                  </tr>
-                </thead>
-                <tbody class="divide-y divide-neutral-100">
-                  <tr><td class="py-1">1</td><td class="font-bold text-neutral-900">Bottom Shell</td><td>1</td><td id="bomHousingMat">Matte PLA</td></tr>
-                  <tr><td class="py-1">2</td><td class="font-bold text-neutral-900">M3 Standoffs</td><td>4</td><td>Brass 4.5mm</td></tr>
-                  <tr><td class="py-1">3</td><td class="font-bold text-neutral-900">14P Master Board</td><td>1</td><td>USB-C Controller</td></tr>
-                  <tr><td class="py-1">4</td><td class="font-bold text-neutral-900">Ribbon Harness</td><td>3</td><td>6-Pin 1.25mm JST</td></tr>
-                  <tr><td class="py-1">5</td><td class="font-bold text-neutral-900">Sensors &amp; Audio</td><td>3</td><td>ToF / Speaker / RGB</td></tr>
-                  <tr><td class="py-1">6</td><td class="font-bold text-neutral-900">Top Bezel Cover</td><td>1</td><td>Snap-Fit</td></tr>
-                </tbody>
-              </table>
+              <div class="flex flex-wrap items-center gap-2 pt-1">
+                <button onclick="flashWebUsb()" id="btnFlashWebUsb" class="px-5 py-2 rounded-full bg-black text-white text-xs font-semibold hover:opacity-85 flex items-center gap-1.5">
+                  <i data-lucide="zap" class="w-3.5 h-3.5 text-yellow-400"></i>
+                  <span id="flashBtnText">Flash WebUSB (COM12)</span>
+                </button>
+                <button onclick="openTerminalExportModal()" class="px-4 py-2 rounded-full bg-neutral-100 hover:bg-neutral-200 text-neutral-900 text-xs font-semibold flex items-center gap-1.5">
+                  <i data-lucide="terminal" class="w-3.5 h-3.5"></i>
+                  <span>Terminal / CLI Export</span>
+                </button>
+                <div id="flashStatusLog" class="text-xs font-mono text-neutral-400 ml-2">Ready</div>
+              </div>
             </div>
-
           </div>
+
+          <!-- Pillar 4: Assembly Schematic -->
+          <div id="pillar-assembly" class="space-y-4 hidden">
+            <div class="atech-card p-5 rounded-3xl space-y-4">
+              <div class="flex items-center justify-between border-b border-black/[0.06] pb-2">
+                <h3 class="font-bold text-neutral-900 text-sm">Exploded Assembly Schematic</h3>
+                <button onclick="downloadSchematicPdf()" class="px-3.5 py-1.5 rounded-full bg-black text-white text-xs font-medium hover:opacity-85 flex items-center gap-1">
+                  <i data-lucide="download" class="w-3 h-3"></i>
+                  <span>Download PDF</span>
+                </button>
+              </div>
+
+              <div class="blueprint-grid rounded-2xl border border-neutral-300 p-4">
+                <div class="flex items-center justify-between text-[10px] font-mono text-neutral-500 border-b border-neutral-200 pb-2">
+                  <span>ATECH-ASM-001</span>
+                  <span id="blueprintMethodText" class="font-bold text-black">3D PRINT (FDM)</span>
+                  <span>SCALE 1:1</span>
+                </div>
+
+                <!-- SVG Schematic -->
+                <svg class="w-full max-w-xl h-64 mx-auto my-3" viewBox="0 0 500 320" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <!-- Top Lid -->
+                  <path d="M120 70 L250 20 L380 70 L250 120 Z" fill="#f1f5f9" stroke="#0f172a" stroke-width="2" />
+                  <circle cx="410" cy="70" r="10" fill="#000" /><text x="410" y="73.5" fill="#fff" font-size="9" font-weight="bold" font-family="monospace" text-anchor="middle">6</text>
+                  <!-- Sensor -->
+                  <rect x="235" y="115" width="30" height="15" rx="3" fill="#0284c7" stroke="#0369a1" stroke-width="1.5" />
+                  <circle cx="80" cy="130" r="10" fill="#000" /><text x="80" y="133.5" fill="#fff" font-size="9" font-weight="bold" font-family="monospace" text-anchor="middle">5</text>
+                  <!-- Wires -->
+                  <path d="M220 180 C200 150, 180 155, 160 145" stroke="#0284c7" stroke-width="2" fill="none" />
+                  <circle cx="80" cy="175" r="10" fill="#000" /><text x="80" y="178.5" fill="#fff" font-size="9" font-weight="bold" font-family="monospace" text-anchor="middle">4</text>
+                  <!-- PCB -->
+                  <path d="M150 185 L250 145 L350 185 L250 225 Z" fill="#15803d" stroke="#14532d" stroke-width="2" />
+                  <circle cx="410" cy="185" r="10" fill="#000" /><text x="410" y="188.5" fill="#fff" font-size="9" font-weight="bold" font-family="monospace" text-anchor="middle">3</text>
+                  <!-- Standoffs -->
+                  <rect x="178" y="225" width="4" height="10" fill="#d97706" />
+                  <rect x="318" y="225" width="4" height="10" fill="#d97706" />
+                  <circle cx="410" cy="235" r="10" fill="#000" /><text x="410" y="238.5" fill="#fff" font-size="9" font-weight="bold" font-family="monospace" text-anchor="middle">2</text>
+                  <!-- Base -->
+                  <path d="M120 250 L250 200 L380 250 L250 300 Z" fill="#e2e8f0" stroke="#0f172a" stroke-width="2" />
+                  <circle cx="80" cy="270" r="10" fill="#000" /><text x="80" y="273.5" fill="#fff" font-size="9" font-weight="bold" font-family="monospace" text-anchor="middle">1</text>
+                </svg>
+
+                <!-- Short BOM Table -->
+                <table class="w-full text-left font-mono text-[10px] text-neutral-600 border-t border-neutral-200 pt-2">
+                  <thead>
+                    <tr class="text-neutral-900 border-b border-neutral-200">
+                      <th class="py-1">#</th>
+                      <th class="py-1">Part</th>
+                      <th class="py-1">Qty</th>
+                      <th class="py-1">Spec</th>
+                    </tr>
+                  </thead>
+                  <tbody class="divide-y divide-neutral-100">
+                    <tr><td class="py-1">1</td><td class="font-bold text-neutral-900">Bottom Shell</td><td>1</td><td id="bomHousingMat">Matte PLA</td></tr>
+                    <tr><td class="py-1">2</td><td class="font-bold text-neutral-900">M3 Standoffs</td><td>4</td><td>Brass 4.5mm</td></tr>
+                    <tr><td class="py-1">3</td><td class="font-bold text-neutral-900">14P Master Board</td><td>1</td><td>USB-C Controller</td></tr>
+                    <tr><td class="py-1">4</td><td class="font-bold text-neutral-900">Ribbon Harness</td><td>3</td><td>6-Pin 1.25mm JST</td></tr>
+                    <tr><td class="py-1">5</td><td class="font-bold text-neutral-900">Sensors &amp; Audio</td><td>3</td><td>ToF / Speaker / RGB</td></tr>
+                    <tr><td class="py-1">6</td><td class="font-bold text-neutral-900">Top Bezel Cover</td><td>1</td><td>Snap-Fit</td></tr>
+                  </tbody>
+                </table>
+              </div>
+
+            </div>
+          </div>
+
+        </div>
+
+        <!-- ================= ADVANCED DESIGN VIEW ================= -->
+        <div id="stage-3-advanced" class="space-y-6 hidden">
+          
+          <!-- Advanced Sub-Nav Tabs -->
+          <div class="flex flex-wrap items-center gap-1.5 bg-neutral-100 p-1.5 rounded-2xl border border-black/[0.04] text-xs font-mono">
+            <button onclick="switchAdvancedTab('cad')" id="adv-tab-cad" class="px-4 py-1.5 rounded-xl bg-black text-white font-bold transition-all flex items-center gap-1.5 shadow-sm">
+              <i data-lucide="box" class="w-3.5 h-3.5"></i>
+              <span>Parametric B-Rep CAD</span>
+            </button>
+            <button onclick="switchAdvancedTab('pinout')" id="adv-tab-pinout" class="px-4 py-1.5 rounded-xl text-neutral-600 hover:text-black font-semibold transition-all flex items-center gap-1.5">
+              <i data-lucide="cpu" class="w-3.5 h-3.5"></i>
+              <span>14-Port Bus &amp; Power</span>
+            </button>
+            <button onclick="switchAdvancedTab('firmware')" id="adv-tab-firmware" class="px-4 py-1.5 rounded-xl text-neutral-600 hover:text-black font-semibold transition-all flex items-center gap-1.5">
+              <i data-lucide="terminal" class="w-3.5 h-3.5"></i>
+              <span>RTOS &amp; WebSerial Studio</span>
+            </button>
+            <button onclick="switchAdvancedTab('dfm')" id="adv-tab-dfm" class="px-4 py-1.5 rounded-xl text-neutral-600 hover:text-black font-semibold transition-all flex items-center gap-1.5">
+              <i data-lucide="check-square" class="w-3.5 h-3.5"></i>
+              <span>DFM &amp; GD&amp;T Audit</span>
+            </button>
+          </div>
+
+          <!-- Advanced Tab 1: Parametric B-Rep CAD -->
+          <div id="adv-pane-cad" class="space-y-4 block">
+            <div class="atech-card p-6 rounded-3xl space-y-5">
+              <div class="flex items-center justify-between border-b border-black/[0.06] pb-3">
+                <div>
+                  <h3 class="font-bold text-neutral-900 text-sm">Parametric Solid B-Rep Geometry Engine</h3>
+                  <p class="text-xs text-neutral-500">Fine-tune exact mechanical tolerances, draft angles, wall thickness, and fastener engagement.</p>
+                </div>
+                <span class="text-xs font-mono bg-emerald-100 text-emerald-800 px-2.5 py-1 rounded-full font-bold">SOLID B-REP VERIFIED</span>
+              </div>
+
+              <!-- Interactive Parametric Sliders Grid -->
+              <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 text-xs font-mono">
+                <div class="bg-neutral-50 p-4 rounded-2xl border border-black/[0.04] space-y-2">
+                  <div class="flex justify-between font-bold text-neutral-900">
+                    <span>WALL THICKNESS</span>
+                    <span id="advValWall" class="text-indigo-600">2.4 mm</span>
+                  </div>
+                  <input type="range" min="1.0" max="4.0" step="0.1" value="2.4" oninput="updateAdvCadParam('wall', this.value)" class="w-full accent-black cursor-pointer" />
+                  <div class="flex justify-between text-[10px] text-neutral-400">
+                    <span>1.0 mm (Thin)</span>
+                    <span>4.0 mm (Structural)</span>
+                  </div>
+                </div>
+
+                <div class="bg-neutral-50 p-4 rounded-2xl border border-black/[0.04] space-y-2">
+                  <div class="flex justify-between font-bold text-neutral-900">
+                    <span>MOLD DRAFT ANGLE</span>
+                    <span id="advValDraft" class="text-indigo-600">1.5°</span>
+                  </div>
+                  <input type="range" min="0.5" max="3.5" step="0.5" value="1.5" oninput="updateAdvCadParam('draft', this.value)" class="w-full accent-black cursor-pointer" />
+                  <div class="flex justify-between text-[10px] text-neutral-400">
+                    <span>0.5° (CNC)</span>
+                    <span>3.5° (Injection Mold)</span>
+                  </div>
+                </div>
+
+                <div class="bg-neutral-50 p-4 rounded-2xl border border-black/[0.04] space-y-2">
+                  <div class="flex justify-between font-bold text-neutral-900">
+                    <span>STANDOFF ENGAGEMENT</span>
+                    <span id="advValStandoff" class="text-indigo-600">4.5 mm</span>
+                  </div>
+                  <input type="range" min="3.0" max="8.0" step="0.5" value="4.5" oninput="updateAdvCadParam('standoff', this.value)" class="w-full accent-black cursor-pointer" />
+                  <div class="flex justify-between text-[10px] text-neutral-400">
+                    <span>M2.5 Thread (3mm)</span>
+                    <span>M3 Heavy (8mm)</span>
+                  </div>
+                </div>
+
+                <div class="bg-neutral-50 p-4 rounded-2xl border border-black/[0.04] space-y-2">
+                  <div class="flex justify-between font-bold text-neutral-900">
+                    <span>SNAP-FIT CANTILEVER</span>
+                    <span id="advValSnap" class="text-indigo-600">0.25 mm</span>
+                  </div>
+                  <input type="range" min="0.10" max="0.60" step="0.05" value="0.25" oninput="updateAdvCadParam('snap', this.value)" class="w-full accent-black cursor-pointer" />
+                  <div class="flex justify-between text-[10px] text-neutral-400">
+                    <span>0.10 mm (Tight)</span>
+                    <span>0.60 mm (Removable)</span>
+                  </div>
+                </div>
+
+                <div class="bg-neutral-50 p-4 rounded-2xl border border-black/[0.04] space-y-2">
+                  <div class="flex justify-between font-bold text-neutral-900">
+                    <span>FILLET BEVEL RADIUS</span>
+                    <span id="advValFillet" class="text-indigo-600">3.0 mm</span>
+                  </div>
+                  <input type="range" min="0.5" max="6.0" step="0.5" value="3.0" oninput="updateAdvCadParam('fillet', this.value)" class="w-full accent-black cursor-pointer" />
+                  <div class="flex justify-between text-[10px] text-neutral-400">
+                    <span>Sharp Edge</span>
+                    <span>Ergonomic Round</span>
+                  </div>
+                </div>
+
+                <div class="bg-neutral-900 text-white p-4 rounded-2xl space-y-1.5 flex flex-col justify-between">
+                  <div class="text-[10px] text-neutral-400 font-bold uppercase">COLLISION &amp; INTERFERENCE</div>
+                  <div class="text-emerald-400 font-bold text-sm flex items-center gap-1.5">
+                    <i data-lucide="check-circle" class="w-4 h-4"></i>
+                    <span>0 Interferences</span>
+                  </div>
+                  <div class="text-[10px] text-neutral-300">PCB Clearance: 1.8mm • Ribbon Strain: OK</div>
+                </div>
+              </div>
+
+              <!-- Professional CAD Bridges -->
+              <div class="pt-2 border-t border-black/[0.06] space-y-3">
+                <div class="flex items-center justify-between">
+                  <span class="text-xs font-bold text-neutral-900 font-mono">EXPORT &amp; PRO CAD SUITE SYNC</span>
+                  <span class="text-[11px] text-neutral-400">Bidirectional Mates &amp; Sketches</span>
+                </div>
+
+                <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 text-xs">
+                  <button onclick="downloadFile('step')" class="p-3 rounded-2xl bg-neutral-50 hover:bg-neutral-100 border border-black/[0.04] text-left transition-all">
+                    <div class="font-bold text-neutral-900">STEP AP242</div>
+                    <div class="text-[10px] text-neutral-400">With GD&amp;T PMI</div>
+                  </button>
+                  <button onclick="selectCadBridge('SolidWorks'); openCreativeModeModal()" class="p-3 rounded-2xl bg-neutral-50 hover:bg-neutral-100 border border-black/[0.04] text-left transition-all">
+                    <div class="font-bold text-neutral-900">SolidWorks</div>
+                    <div class="text-[10px] text-neutral-400">.SLDPRT Assembly</div>
+                  </button>
+                  <button onclick="selectCadBridge('Autodesk Fusion 360'); openCreativeModeModal()" class="p-3 rounded-2xl bg-neutral-50 hover:bg-neutral-100 border border-black/[0.04] text-left transition-all">
+                    <div class="font-bold text-neutral-900">Fusion 360</div>
+                    <div class="text-[10px] text-neutral-400">.F3D Cloud Bridge</div>
+                  </button>
+                  <button onclick="selectCadBridge('Siemens NX / Annex'); openCreativeModeModal()" class="p-3 rounded-2xl bg-neutral-50 hover:bg-neutral-100 border border-black/[0.04] text-left transition-all">
+                    <div class="font-bold text-neutral-900">Siemens NX</div>
+                    <div class="text-[10px] text-neutral-400">.PRT Synchronous</div>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Advanced Tab 2: 14-Port Bus & Power Matrix -->
+          <div id="adv-pane-pinout" class="space-y-4 hidden">
+            <div class="atech-card p-6 rounded-3xl space-y-5">
+              <div class="flex items-center justify-between border-b border-black/[0.06] pb-3">
+                <div>
+                  <h3 class="font-bold text-neutral-900 text-sm">14-Port Dynamic Bus Multiplexer &amp; Power Matrix</h3>
+                  <p class="text-xs text-neutral-500">6-Pin universal ribbon bus routing, I2C address conflict map, and 3.3V/5V load budget.</p>
+                </div>
+                <span class="text-xs font-mono bg-indigo-100 text-indigo-800 px-2.5 py-1 rounded-full font-bold">14P UNIVERSAL BUS</span>
+              </div>
+
+              <!-- Power Budget Metrics -->
+              <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs font-mono">
+                <div class="bg-neutral-900 text-white p-4 rounded-2xl space-y-1.5">
+                  <div class="flex justify-between text-[10px] text-neutral-400">
+                    <span>3.3V LDO RAIL LOAD</span>
+                    <span class="text-emerald-400 font-bold">23.1%</span>
+                  </div>
+                  <div class="text-lg font-bold text-emerald-400">185 mA <span class="text-xs font-normal text-neutral-400">/ 800 mA max</span></div>
+                  <div class="w-full bg-neutral-800 h-1.5 rounded-full overflow-hidden">
+                    <div class="bg-emerald-400 h-full rounded-full" style="width: 23%"></div>
+                  </div>
+                </div>
+
+                <div class="bg-neutral-900 text-white p-4 rounded-2xl space-y-1.5">
+                  <div class="flex justify-between text-[10px] text-neutral-400">
+                    <span>5V VBUS PEAK</span>
+                    <span class="text-yellow-400 font-bold">15.5%</span>
+                  </div>
+                  <div class="text-lg font-bold text-yellow-400">310 mA <span class="text-xs font-normal text-neutral-400">/ 2000 mA</span></div>
+                  <div class="w-full bg-neutral-800 h-1.5 rounded-full overflow-hidden">
+                    <div class="bg-yellow-400 h-full rounded-full" style="width: 16%"></div>
+                  </div>
+                </div>
+
+                <div class="bg-neutral-900 text-white p-4 rounded-2xl space-y-1.5">
+                  <div class="flex justify-between text-[10px] text-neutral-400">
+                    <span>500mAh LiPo RUNTIME</span>
+                    <span class="text-cyan-400 font-bold">ACTIVE</span>
+                  </div>
+                  <div class="text-lg font-bold text-cyan-400">~14.2 Hours</div>
+                  <div class="text-[10px] text-neutral-400">Deep Sleep: ~420 Hours (14µA)</div>
+                </div>
+              </div>
+
+              <!-- 14-Port Interactive Matrix Table -->
+              <div class="space-y-2">
+                <div class="flex items-center justify-between text-xs font-mono text-neutral-400 font-bold">
+                  <span>14-PORT MULTIPLEXING TABLE</span>
+                  <span>PIN 1-6 UNIVERSAL RIBBON JST</span>
+                </div>
+
+                <div class="overflow-x-auto border border-black/[0.06] rounded-2xl">
+                  <table class="w-full text-left font-mono text-xs divide-y divide-black/[0.05]">
+                    <thead class="bg-neutral-50 text-[10px] text-neutral-500 uppercase">
+                      <tr>
+                        <th class="p-2.5">Port</th>
+                        <th class="p-2.5">Assigned Module</th>
+                        <th class="p-2.5">Pin 3 (Signal A)</th>
+                        <th class="p-2.5">Pin 4 (Signal B)</th>
+                        <th class="p-2.5">Pin 5 (IRQ / PWM)</th>
+                        <th class="p-2.5">Pin 6 (Aux / ADC)</th>
+                        <th class="p-2.5">Protocol / Address</th>
+                      </tr>
+                    </thead>
+                    <tbody class="divide-y divide-black/[0.04] bg-white text-[11px]">
+                      <tr>
+                        <td class="p-2.5 font-bold text-neutral-900">PORT 1</td>
+                        <td class="p-2.5"><span class="bg-neutral-100 text-neutral-800 px-2 py-0.5 rounded font-bold">VL53L5CX ToF Sensor</span></td>
+                        <td class="p-2.5 text-neutral-600">SDA (I2C0)</td>
+                        <td class="p-2.5 text-neutral-600">SCL (I2C0)</td>
+                        <td class="p-2.5 text-indigo-600 font-bold">GPIO 14 (INT)</td>
+                        <td class="p-2.5 text-neutral-400">LPn Power Pin</td>
+                        <td class="p-2.5 font-bold text-emerald-700">I2C (0x29)</td>
+                      </tr>
+                      <tr>
+                        <td class="p-2.5 font-bold text-neutral-900">PORT 2</td>
+                        <td class="p-2.5"><span class="bg-neutral-100 text-neutral-800 px-2 py-0.5 rounded font-bold">I2S Audio Speaker DAC</span></td>
+                        <td class="p-2.5 text-neutral-600">DIN (I2S0_DATA)</td>
+                        <td class="p-2.5 text-neutral-600">BCLK (I2S0_CLK)</td>
+                        <td class="p-2.5 text-indigo-600 font-bold">LRCK (I2S0_WS)</td>
+                        <td class="p-2.5 text-neutral-400">Mute Pull-Down</td>
+                        <td class="p-2.5 font-bold text-emerald-700">I2S DSP (44.1kHz)</td>
+                      </tr>
+                      <tr>
+                        <td class="p-2.5 font-bold text-neutral-900">PORT 3</td>
+                        <td class="p-2.5"><span class="bg-neutral-100 text-neutral-800 px-2 py-0.5 rounded font-bold">NeoPixel 3×3 RGB Array</span></td>
+                        <td class="p-2.5 text-neutral-600">MOSI (SPI0_DATA)</td>
+                        <td class="p-2.5 text-neutral-400">NC</td>
+                        <td class="p-2.5 text-indigo-600 font-bold">PWM 20kHz</td>
+                        <td class="p-2.5 text-neutral-400">NC</td>
+                        <td class="p-2.5 font-bold text-emerald-700">Single-Wire 800kHz</td>
+                      </tr>
+                      <tr class="text-neutral-400 bg-neutral-50/50">
+                        <td class="p-2.5 font-bold text-neutral-500">PORTS 4–14</td>
+                        <td class="p-2.5">Available for Expansion Modules</td>
+                        <td class="p-2.5">Auto-Negotiate</td>
+                        <td class="p-2.5">Auto-Negotiate</td>
+                        <td class="p-2.5">Auto-Negotiate</td>
+                        <td class="p-2.5">Auto-Negotiate</td>
+                        <td class="p-2.5">Universal Hot-Plug</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Advanced Tab 3: RTOS & WebSerial Studio -->
+          <div id="adv-pane-firmware" class="space-y-4 hidden">
+            <div class="atech-card p-6 rounded-3xl space-y-5">
+              <div class="flex items-center justify-between border-b border-black/[0.06] pb-3">
+                <div>
+                  <h3 class="font-bold text-neutral-900 text-sm">Real-Time WebSerial Monitor &amp; RTOS Compiler</h3>
+                  <p class="text-xs text-neutral-500">Multi-core task allocation, live sensor waveform oscilloscope, and direct terminal flashing.</p>
+                </div>
+                <div class="flex items-center gap-2">
+                  <span class="text-xs font-mono bg-emerald-100 text-emerald-800 px-2.5 py-1 rounded-full font-bold">115200 BAUD</span>
+                </div>
+              </div>
+
+              <!-- RTOS Tasks Summary -->
+              <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs font-mono">
+                <div class="bg-neutral-50 p-3 rounded-2xl border border-black/[0.04]">
+                  <div class="font-bold text-neutral-900 flex items-center justify-between">
+                    <span>CORE 0 • TASK 1</span>
+                    <span class="text-emerald-600 font-bold">100 Hz</span>
+                  </div>
+                  <div class="text-[11px] text-neutral-500 mt-1">ToF &amp; IMU Sensor Sampling Engine</div>
+                </div>
+
+                <div class="bg-neutral-50 p-3 rounded-2xl border border-black/[0.04]">
+                  <div class="font-bold text-neutral-900 flex items-center justify-between">
+                    <span>CORE 1 • TASK 2</span>
+                    <span class="text-indigo-600 font-bold">30 Hz</span>
+                  </div>
+                  <div class="text-[11px] text-neutral-500 mt-1">NeoPixel RGB Framebuffer &amp; UI</div>
+                </div>
+
+                <div class="bg-neutral-50 p-3 rounded-2xl border border-black/[0.04]">
+                  <div class="font-bold text-neutral-900 flex items-center justify-between">
+                    <span>CORE 1 • TASK 3</span>
+                    <span class="text-amber-600 font-bold">44.1 kHz</span>
+                  </div>
+                  <div class="text-[11px] text-neutral-500 mt-1">I2S Audio Tone Synthesis DMA</div>
+                </div>
+              </div>
+
+              <!-- Live Sensor Oscilloscope Waveform Canvas -->
+              <div class="bg-neutral-900 rounded-2xl p-4 text-white space-y-2">
+                <div class="flex items-center justify-between text-xs font-mono">
+                  <div class="flex items-center gap-2">
+                    <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                    <span class="text-neutral-300 font-bold">LIVE WEBSERIAL OSCILLOSCOPE (COM12)</span>
+                  </div>
+                  <div class="flex items-center gap-2">
+                    <span class="text-neutral-400 text-[10px]">CH1: Distance (mm) • CH2: Audio Freq (Hz)</span>
+                    <button onclick="toggleOscilloscope()" id="btnOscilloscope" class="px-2.5 py-0.5 rounded bg-neutral-800 hover:bg-neutral-700 text-yellow-400 text-[10px]">PAUSE</button>
+                  </div>
+                </div>
+
+                <!-- Canvas Graph -->
+                <canvas id="oscilloscopeCanvas" width="800" height="130" class="w-full bg-black rounded-xl border border-neutral-800"></canvas>
+
+                <div class="flex items-center justify-between text-[10px] font-mono text-neutral-400 pt-1">
+                  <span>Stream: 100 Samples/sec</span>
+                  <span>Peak: 340mm @ 660Hz</span>
+                  <span>Frame Drop: 0.0%</span>
+                </div>
+              </div>
+
+              <!-- Actions -->
+              <div class="flex flex-wrap items-center gap-2 pt-1">
+                <button onclick="flashWebUsb()" class="px-5 py-2 rounded-full bg-black text-white text-xs font-semibold hover:opacity-85 flex items-center gap-1.5">
+                  <i data-lucide="zap" class="w-3.5 h-3.5 text-yellow-400"></i>
+                  <span>Flash Over WebUSB</span>
+                </button>
+                <button onclick="openTerminalExportModal()" class="px-4 py-2 rounded-full bg-neutral-100 hover:bg-neutral-200 text-neutral-900 text-xs font-semibold flex items-center gap-1.5">
+                  <i data-lucide="terminal" class="w-3.5 h-3.5"></i>
+                  <span>CLI Terminal Sync</span>
+                </button>
+                <button onclick="openCustomAgentModal()" class="px-4 py-2 rounded-full bg-gradient-to-r from-teal-500 to-indigo-600 text-white text-xs font-semibold flex items-center gap-1.5 shadow-sm">
+                  <i data-lucide="sparkles" class="w-3.5 h-3.5"></i>
+                  <span>Inject Custom Agent Hook</span>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Advanced Tab 4: DFM & GD&T Tolerance Stackup -->
+          <div id="adv-pane-dfm" class="space-y-4 hidden">
+            <div class="atech-card p-6 rounded-3xl space-y-5">
+              <div class="flex items-center justify-between border-b border-black/[0.06] pb-3">
+                <div>
+                  <h3 class="font-bold text-neutral-900 text-sm">DFM (Design for Manufacturing) &amp; GD&amp;T Tolerance Audit</h3>
+                  <p class="text-xs text-neutral-500">Automated manufacturing suitability check for 3D Printing (FDM/SLA), CNC Milling, and Injection Tooling.</p>
+                </div>
+                <span class="text-xs font-mono bg-emerald-100 text-emerald-800 px-2.5 py-1 rounded-full font-bold">DFM 100% READY</span>
+              </div>
+
+              <!-- DFM Checklist Grid -->
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+                <div class="p-4 rounded-2xl bg-neutral-50 border border-black/[0.04] space-y-1">
+                  <div class="flex items-center justify-between font-bold text-neutral-900 font-mono">
+                    <span>1. GD&amp;T TOLERANCE STACKUP</span>
+                    <span class="text-emerald-600 font-bold">✓ PASS</span>
+                  </div>
+                  <p class="text-[11px] text-neutral-500">Mating lid clearance nominal at +0.25mm. Fits ISO 2768-m medium tolerance class across all manufacturing methods.</p>
+                </div>
+
+                <div class="p-4 rounded-2xl bg-neutral-50 border border-black/[0.04] space-y-1">
+                  <div class="flex items-center justify-between font-bold text-neutral-900 font-mono">
+                    <span>2. MOLD DRAFT &amp; PULL VECTOR</span>
+                    <span class="text-emerald-600 font-bold">✓ PASS</span>
+                  </div>
+                  <p class="text-[11px] text-neutral-500">Uniform 1.5° draft applied on all vertical faces. Zero reverse undercuts detected for standard 2-plate tooling.</p>
+                </div>
+
+                <div class="p-4 rounded-2xl bg-neutral-50 border border-black/[0.04] space-y-1">
+                  <div class="flex items-center justify-between font-bold text-neutral-900 font-mono">
+                    <span>3. THERMAL &amp; AIR GAP AUDIT</span>
+                    <span class="text-emerald-600 font-bold">✓ PASS</span>
+                  </div>
+                  <p class="text-[11px] text-neutral-500">Main microcontroller dissipated thermal load is under 0.6W. 1.8mm air gap guarantees passive cooling under 45°C.</p>
+                </div>
+
+                <div class="p-4 rounded-2xl bg-neutral-50 border border-black/[0.04] space-y-1">
+                  <div class="flex items-center justify-between font-bold text-neutral-900 font-mono">
+                    <span>4. BOM SUPPLY CHAIN READINESS</span>
+                    <span class="text-emerald-600 font-bold">✓ IN STOCK</span>
+                  </div>
+                  <p class="text-[11px] text-neutral-500">All 14-Port motherboard components, 6-pin ribbon harnesses, and sensors are stocked in Copenhagen/Stockholm hubs for 24h dispatch.</p>
+                </div>
+              </div>
+
+              <!-- Direct Step 4 CTA -->
+              <div class="pt-2 border-t border-black/[0.06] flex items-center justify-between">
+                <span class="text-xs text-neutral-500 font-mono">Ready to manufacture or assemble your build?</span>
+                <button onclick="goToStage(4)" class="px-5 py-2 rounded-full bg-black text-white text-xs font-semibold hover:opacity-85 flex items-center gap-1.5 shadow-sm">
+                  <span>Proceed to Pre-Order Kit →</span>
+                </button>
+              </div>
+            </div>
+          </div>
+
         </div>
 
       </div>
@@ -2201,6 +2604,121 @@ void loop() {
         }
       });
       lucide.createIcons();
+    }
+
+    function setDesignMode(mode) {
+      state.designMode = mode;
+      const stdView = document.getElementById('stage-3-standard');
+      const advView = document.getElementById('stage-3-advanced');
+      const btnStd = document.getElementById('btn-design-mode-std');
+      const btnAdv = document.getElementById('btn-design-mode-adv');
+
+      if (mode === 'advanced') {
+        if (stdView) { stdView.classList.remove('block'); stdView.classList.add('hidden'); }
+        if (advView) { advView.classList.remove('hidden'); advView.classList.add('block'); }
+        if (btnStd) btnStd.className = "px-3 py-1 rounded-full text-neutral-600 hover:text-black font-semibold transition-all flex items-center gap-1";
+        if (btnAdv) btnAdv.className = "px-3 py-1 rounded-full bg-black text-white font-bold transition-all flex items-center gap-1 shadow-sm";
+        showToast('Switched to Advanced Design Mode');
+        startOscilloscope();
+      } else {
+        if (stdView) { stdView.classList.remove('hidden'); stdView.classList.add('block'); }
+        if (advView) { advView.classList.remove('block'); advView.classList.add('hidden'); }
+        if (btnStd) btnStd.className = "px-3 py-1 rounded-full bg-black text-white font-bold transition-all flex items-center gap-1 shadow-sm";
+        if (btnAdv) btnAdv.className = "px-3 py-1 rounded-full text-neutral-600 hover:text-black font-semibold transition-all flex items-center gap-1";
+        showToast('Switched to Standard Design Mode');
+      }
+      lucide.createIcons();
+    }
+
+    function switchAdvancedTab(tab) {
+      state.advancedTab = tab;
+      ['cad', 'pinout', 'firmware', 'dfm'].forEach(t => {
+        const pane = document.getElementById(`adv-pane-${t}`);
+        const btn = document.getElementById(`adv-tab-${t}`);
+        if (t === tab) {
+          if (pane) { pane.classList.remove('hidden'); pane.classList.add('block'); }
+          if (btn) btn.className = "px-4 py-1.5 rounded-xl bg-black text-white font-bold transition-all flex items-center gap-1.5 shadow-sm";
+        } else {
+          if (pane) { pane.classList.remove('block'); pane.classList.add('hidden'); }
+          if (btn) btn.className = "px-4 py-1.5 rounded-xl text-neutral-600 hover:text-black font-semibold transition-all flex items-center gap-1.5";
+        }
+      });
+      if (tab === 'firmware') startOscilloscope();
+      lucide.createIcons();
+    }
+
+    function updateAdvCadParam(param, val) {
+      if (param === 'wall') document.getElementById('advValWall').textContent = `${parseFloat(val).toFixed(1)} mm`;
+      else if (param === 'draft') document.getElementById('advValDraft').textContent = `${parseFloat(val).toFixed(1)}°`;
+      else if (param === 'standoff') document.getElementById('advValStandoff').textContent = `${parseFloat(val).toFixed(1)} mm`;
+      else if (param === 'snap') document.getElementById('advValSnap').textContent = `${parseFloat(val).toFixed(2)} mm`;
+      else if (param === 'fillet') document.getElementById('advValFillet').textContent = `${parseFloat(val).toFixed(1)} mm`;
+    }
+
+    let oscRunning = true;
+    let oscAnimationId = null;
+    function startOscilloscope() {
+      const canvas = document.getElementById('oscilloscopeCanvas');
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d');
+      let offset = 0;
+
+      function render() {
+        if (!oscRunning) return;
+        ctx.fillStyle = '#0a0a0a';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        // Grid lines
+        ctx.strokeStyle = '#1e293b';
+        ctx.lineWidth = 1;
+        for (let x = 0; x < canvas.width; x += 40) {
+          ctx.beginPath();
+          ctx.moveTo(x, 0);
+          ctx.lineTo(x, canvas.height);
+          ctx.stroke();
+        }
+        for (let y = 0; y < canvas.height; y += 26) {
+          ctx.beginPath();
+          ctx.moveTo(0, y);
+          ctx.lineTo(canvas.width, y);
+          ctx.stroke();
+        }
+
+        // Channel 1: Distance waveform (Cyan)
+        ctx.strokeStyle = '#06b6d4';
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        for (let x = 0; x < canvas.width; x++) {
+          const y = (canvas.height / 2) - 15 + Math.sin((x + offset) * 0.03) * 35 + Math.sin((x + offset) * 0.08) * 12;
+          if (x === 0) ctx.moveTo(x, y);
+          else ctx.lineTo(x, y);
+        }
+        ctx.stroke();
+
+        // Channel 2: Audio Frequency Waveform (Amber)
+        ctx.strokeStyle = '#f59e0b';
+        ctx.lineWidth = 1.5;
+        ctx.beginPath();
+        for (let x = 0; x < canvas.width; x++) {
+          const y = (canvas.height / 2) + 20 + Math.cos((x + offset * 1.5) * 0.06) * 22;
+          if (x === 0) ctx.moveTo(x, y);
+          else ctx.lineTo(x, y);
+        }
+        ctx.stroke();
+
+        offset += 2;
+        oscAnimationId = requestAnimationFrame(render);
+      }
+
+      if (oscAnimationId) cancelAnimationFrame(oscAnimationId);
+      render();
+    }
+
+    function toggleOscilloscope() {
+      oscRunning = !oscRunning;
+      const btn = document.getElementById('btnOscilloscope');
+      if (btn) btn.textContent = oscRunning ? 'PAUSE' : 'RESUME';
+      if (oscRunning) startOscilloscope();
     }
 
     function populateElecList() {
