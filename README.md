@@ -30,7 +30,15 @@ Backed by **$800K Pre-Seed** from **Emblem, Nordic Makers, Lovable, Sequoia, and
 
 ---
 
-### 2. ⚡ Pro Studio Mode & Undercover Toggle
+### 2. 📁 Discreet Project Workspace Sidebar
+* **Collapsible Drawer**: Slide-over drawer accessible via the top navigation pill or floating left side rail tab.
+* **Saved Hardware Builds**: Houses all ongoing and previous hardware builds with live prompt summaries, active status badges, and module counts.
+* **Instant Project Switching**: 1-click load directly into the 3D studio, real-time search filtering, JSON export backup, and new build creation.
+* **Put Away Controls**: Minimalist "Put Away" toggle, backdrop dismiss, and `Escape` key support.
+
+---
+
+### 3. ⚡ Pro Studio Mode & Undercover Toggle
 * Discreet **Pro Mode** toggle in the profile dropdown modal.
 * **Parametric Solid B-Rep CAD Engine**: Real-time sliders for wall thickness, mold draft angles, brass standoff engagement, snap cantilever clearance, and fillet radii.
 * **14-Port Dynamic Bus Multiplexer & Power Matrix**: Live I2C address conflict resolver, 3.3V/5V load auditor, and 500mAh LiPo battery life calculator.

@@ -137,13 +137,22 @@
   <header class="sticky top-0 z-40 bg-white/85 backdrop-blur-xl border-b border-black/[0.04] transition-all">
     <div class="max-w-6xl mx-auto px-5 sm:px-8 h-16 flex items-center justify-between">
       
-      <!-- Brand Logo -->
-      <a href="#design" onclick="switchPage('design')" class="flex items-center gap-2.5 group">
-        <div class="w-8 h-8 rounded-xl bg-black flex items-center justify-center font-mono font-bold text-sm text-white shadow-sm group-hover:scale-105 transition-transform">
-          A
-        </div>
-        <span class="font-bold tracking-tight text-base sm:text-lg text-neutral-900">atech<span class="text-neutral-400 font-normal">.dev</span></span>
-      </a>
+      <!-- Brand Logo + Discreet Projects Sidebar Trigger -->
+      <div class="flex items-center gap-3">
+        <a href="#design" onclick="switchPage('design')" class="flex items-center gap-2.5 group">
+          <div class="w-8 h-8 rounded-xl bg-black flex items-center justify-center font-mono font-bold text-sm text-white shadow-sm group-hover:scale-105 transition-transform">
+            A
+          </div>
+          <span class="font-bold tracking-tight text-base sm:text-lg text-neutral-900">atech<span class="text-neutral-400 font-normal">.dev</span></span>
+        </a>
+
+        <!-- Discreet Project Sidebar Pill -->
+        <button id="headerProjectBtn" onclick="toggleProjectSidebar()" class="hidden sm:flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-neutral-100/80 hover:bg-neutral-200/70 border border-black/[0.04] text-xs font-mono font-medium text-neutral-700 hover:text-black shadow-xs transition-all" title="View Project History (Click to open / put away)">
+          <i data-lucide="folder-kanban" class="w-3.5 h-3.5 text-neutral-500"></i>
+          <span class="text-[11px]">Projects</span>
+          <span id="headerProjectCount" class="text-[10px] font-bold bg-white text-neutral-800 px-1.5 py-0.2 rounded-full border border-black/[0.04]">4</span>
+        </button>
+      </div>
 
       <!-- Center Navigation -->
       <nav class="hidden md:flex items-center gap-1 bg-neutral-100/80 p-1 rounded-full border border-black/[0.03]">
@@ -205,6 +214,13 @@
       </button>
     </div>
   </header>
+
+  <!-- Floating Discreet Side Rail Tab Trigger -->
+  <button id="floatingProjectTrigger" onclick="toggleProjectSidebar()" class="fixed left-0 top-24 z-30 px-2.5 py-1.5 rounded-r-2xl bg-white/90 hover:bg-white border-y border-r border-black/[0.08] shadow-sm backdrop-blur-md text-xs font-mono font-medium text-neutral-600 hover:text-black transition-all flex items-center gap-1.5 group hover:pl-3.5 hover:shadow-md" title="Project Workspace (Click to open / put away)">
+    <i data-lucide="folder" class="w-3.5 h-3.5 text-neutral-500 group-hover:text-black transition-colors"></i>
+    <span class="hidden lg:inline text-[11px]">Projects</span>
+    <span id="floatingProjectCount" class="bg-neutral-100 text-neutral-800 text-[10px] px-1.5 py-0.2 rounded-full font-bold border border-black/[0.04]">4</span>
+  </button>
 
   <!-- ========================================================================= -->
   <!-- MAIN -->
@@ -2181,6 +2197,62 @@ void loop() {
   </div>
 
   <!-- ========================================================================= -->
+  <!-- DISCREET PROJECT WORKSPACE SIDEBAR (PUT AWAY / COLLAPSIBLE DRAWER) -->
+  <!-- ========================================================================= -->
+  <div id="projectSidebarBackdrop" onclick="closeProjectSidebar()" class="fixed inset-0 bg-black/25 backdrop-blur-[2px] z-50 opacity-0 pointer-events-none transition-opacity duration-300"></div>
+
+  <aside id="projectSidebar" class="fixed top-0 left-0 bottom-0 w-84 max-w-[88vw] bg-white border-r border-black/[0.08] shadow-2xl z-50 transform -translate-x-full transition-transform duration-300 flex flex-col justify-between">
+    
+    <!-- Sidebar Header -->
+    <div class="p-4 border-b border-black/[0.06] flex items-center justify-between bg-neutral-50/50">
+      <div class="flex items-center gap-2.5">
+        <div class="w-8 h-8 rounded-xl bg-black text-white flex items-center justify-center text-xs font-bold shadow-sm">
+          <i data-lucide="folder-kanban" class="w-4 h-4"></i>
+        </div>
+        <div>
+          <h3 class="font-bold text-neutral-900 text-sm">Project History</h3>
+          <p id="sidebarProjectCountSub" class="text-[10px] font-mono text-neutral-400">4 saved hardware builds</p>
+        </div>
+      </div>
+
+      <!-- Put Away (Close) Button -->
+      <button onclick="closeProjectSidebar()" class="p-1.5 rounded-xl hover:bg-neutral-200 text-neutral-400 hover:text-neutral-900 transition-colors" title="Put away sidebar">
+        <i data-lucide="x" class="w-4 h-4"></i>
+      </button>
+    </div>
+
+    <!-- Quick Action: New Build + Filter Search -->
+    <div class="p-3 border-b border-black/[0.04] space-y-2 bg-neutral-50/30">
+      <button onclick="startNewProject()" class="w-full py-2 px-3 rounded-xl bg-black hover:bg-neutral-800 text-white text-xs font-semibold shadow-sm transition-all flex items-center justify-center gap-1.5">
+        <i data-lucide="plus" class="w-3.5 h-3.5"></i>
+        <span>New Hardware Project</span>
+      </button>
+      <input type="text" id="projectSearchInput" placeholder="Search saved projects..." oninput="filterProjectSidebar(this.value)" class="w-full atech-input rounded-xl px-2.5 py-1.5 text-xs text-neutral-900 focus:outline-none placeholder:text-neutral-400" />
+    </div>
+
+    <!-- Scrollable Projects List -->
+    <div class="flex-1 overflow-y-auto p-3 space-y-2" id="projectSidebarList">
+      <!-- Dynamically generated via renderProjectSidebarList() -->
+    </div>
+
+    <!-- Sidebar Footer -->
+    <div class="p-3 border-t border-black/[0.06] bg-neutral-50 space-y-2 text-xs">
+      <div class="flex items-center justify-between text-[10px] font-mono text-neutral-400">
+        <span class="flex items-center gap-1.5 text-emerald-600 font-semibold">
+          <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+          Auto-saved locally
+        </span>
+        <button onclick="exportAllProjectsJson()" class="text-neutral-600 hover:text-black underline">Export JSON</button>
+      </div>
+      <button onclick="closeProjectSidebar()" class="w-full py-1.5 rounded-xl bg-neutral-200/70 hover:bg-neutral-200 text-neutral-700 font-semibold text-xs transition-colors flex items-center justify-center gap-1.5">
+        <i data-lucide="panel-left-close" class="w-3.5 h-3.5"></i>
+        <span>Put Away</span>
+      </button>
+    </div>
+
+  </aside>
+
+  <!-- ========================================================================= -->
   <!-- SCRIPT -->
   <!-- ========================================================================= -->
   <script>
@@ -2195,6 +2267,62 @@ void loop() {
       fabMode: '3dprint',
       material: 'matte_pla',
       selectedCadBridge: 'SolidWorks',
+      isSidebarOpen: false,
+      savedProjects: [
+        {
+          id: 'proj_air_piano',
+          title: 'Air Piano Synth',
+          prompt: 'A contactless air piano with a distance sensor, speaker, and an RGB display',
+          category: 'Audio',
+          tag: 'I2C ToF + I2S Audio',
+          timestamp: '2 hours ago',
+          modules: [
+            { port: 'Port 1', name: 'VL53L5CX Distance Sensor', type: 'I2C ToF Laser' },
+            { port: 'Port 2', name: 'I2S Speaker (MAX98357A)', type: 'Digital Audio' },
+            { port: 'Port 3', name: 'NeoPixel 3x3 RGB Grid', type: 'WS2812B Matrix' },
+          ],
+          dims: { len: 120, wid: 80, hgt: 35 },
+        },
+        {
+          id: 'proj_tilt_maze',
+          title: 'Tilt Marble Maze',
+          prompt: 'Console with 6-axis IMU gyro, ST7735 color TFT screen, and buttons',
+          category: 'Gaming',
+          tag: '6-Axis IMU + SPI TFT',
+          timestamp: 'Yesterday',
+          modules: [
+            { port: 'Port 1', name: 'ICM40608 IMU', type: 'Tilt' },
+            { port: 'Port 2', name: 'ST7735 TFT', type: 'SPI LCD' },
+          ],
+          dims: { len: 135, wid: 70, hgt: 26 }
+        },
+        {
+          id: 'proj_robot_arm',
+          title: '6-Axis Robot Gripper Deck',
+          prompt: 'Dual rotary encoder desk deck for SO-ARM100 6-axis robot bus',
+          category: 'Robotics',
+          tag: 'Dual Dial + UART Bus',
+          timestamp: '3 days ago',
+          modules: [
+            { port: 'Port 1', name: 'Dual Encoders', type: 'Dial' },
+            { port: 'Port 2', name: 'SO-ARM100 Bus', type: 'UART' },
+          ],
+          dims: { len: 150, wid: 90, hgt: 40 }
+        },
+        {
+          id: 'proj_wifi_lights',
+          title: 'WiFi RGB Desk Cube',
+          prompt: 'WiFi RGB desk cube with NeoPixel matrix and encoder knob',
+          category: 'Ambient',
+          tag: 'NeoPixel Matrix + Dial',
+          timestamp: '5 days ago',
+          modules: [
+            { port: 'Port 1', name: 'NeoPixel Matrix', type: 'RGB' },
+            { port: 'Port 2', name: 'Rotary Encoder', type: 'Dial' },
+          ],
+          dims: { len: 85, wid: 85, hgt: 85 }
+        }
+      ],
       project: {
         title: 'Air Piano Synth',
         prompt: 'A contactless air piano with a distance sensor, speaker, and an RGB display',
@@ -2564,6 +2692,177 @@ void loop() {
       lucide.createIcons();
     }
 
+    // =========================================================================
+    // PROJECT WORKSPACE & HISTORY SIDEBAR MANAGEMENT
+    // =========================================================================
+    function toggleProjectSidebar() {
+      if (state.isSidebarOpen) closeProjectSidebar();
+      else openProjectSidebar();
+    }
+
+    function openProjectSidebar() {
+      state.isSidebarOpen = true;
+      const sb = document.getElementById('projectSidebar');
+      const bd = document.getElementById('projectSidebarBackdrop');
+      if (sb) sb.classList.remove('-translate-x-full');
+      if (bd) {
+        bd.classList.remove('opacity-0', 'pointer-events-none');
+        bd.classList.add('opacity-100', 'pointer-events-auto');
+      }
+      renderProjectSidebarList(document.getElementById('projectSearchInput')?.value || '');
+    }
+
+    function closeProjectSidebar() {
+      state.isSidebarOpen = false;
+      const sb = document.getElementById('projectSidebar');
+      const bd = document.getElementById('projectSidebarBackdrop');
+      if (sb) sb.classList.add('-translate-x-full');
+      if (bd) {
+        bd.classList.remove('opacity-100', 'pointer-events-auto');
+        bd.classList.add('opacity-0', 'pointer-events-none');
+      }
+    }
+
+    function renderProjectSidebarList(filterText = '') {
+      const list = document.getElementById('projectSidebarList');
+      if (!list) return;
+      list.innerHTML = '';
+
+      const search = (filterText || '').toLowerCase().trim();
+      const filtered = state.savedProjects.filter(p => 
+        (p.title && p.title.toLowerCase().includes(search)) || 
+        (p.prompt && p.prompt.toLowerCase().includes(search)) ||
+        (p.category && p.category.toLowerCase().includes(search)) ||
+        (p.tag && p.tag.toLowerCase().includes(search))
+      );
+
+      const count = state.savedProjects.length;
+      const cntBadge = document.getElementById('headerProjectCount');
+      const fltBadge = document.getElementById('floatingProjectCount');
+      const subText = document.getElementById('sidebarProjectCountSub');
+      if (cntBadge) cntBadge.textContent = count;
+      if (fltBadge) fltBadge.textContent = count;
+      if (subText) subText.textContent = `${count} saved hardware build${count === 1 ? '' : 's'}`;
+
+      if (filtered.length === 0) {
+        list.innerHTML = `
+          <div class="text-center py-10 text-neutral-400 space-y-2 text-xs">
+            <i data-lucide="inbox" class="w-7 h-7 mx-auto stroke-1 text-neutral-300"></i>
+            <p>No builds found matching "${filterText}"</p>
+          </div>
+        `;
+        lucide.createIcons();
+        return;
+      }
+
+      filtered.forEach(proj => {
+        const isActive = state.project && (state.project.title === proj.title);
+        const card = document.createElement('div');
+        card.className = `p-3 rounded-2xl border transition-all cursor-pointer space-y-2 group ${
+          isActive 
+            ? 'bg-neutral-900 text-white border-black shadow-sm' 
+            : 'bg-neutral-50 hover:bg-neutral-100 text-neutral-900 border-black/[0.05]'
+        }`;
+
+        card.innerHTML = `
+          <div class="flex items-start justify-between gap-2">
+            <div class="space-y-1 flex-1 min-w-0" onclick="loadSavedProject('${proj.id}')">
+              <div class="flex items-center gap-1.5">
+                <span class="font-bold text-xs truncate ${isActive ? 'text-white' : 'text-neutral-900'}">${proj.title}</span>
+                ${isActive ? '<span class="text-[9px] font-mono bg-yellow-400 text-black px-1.5 py-0.2 rounded font-bold">ACTIVE</span>' : ''}
+              </div>
+              <p class="text-[11px] ${isActive ? 'text-neutral-300' : 'text-neutral-500'} line-clamp-2 leading-tight">${proj.prompt}</p>
+            </div>
+
+            <button onclick="deleteSavedProject('${proj.id}', event)" class="opacity-0 group-hover:opacity-100 p-1.5 rounded-lg hover:bg-red-500 hover:text-white ${isActive ? 'text-neutral-400' : 'text-neutral-400'} transition-all shrink-0" title="Delete project">
+              <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
+            </button>
+          </div>
+
+          <div class="flex items-center justify-between text-[10px] font-mono ${isActive ? 'text-neutral-400' : 'text-neutral-400'} pt-1.5 border-t ${isActive ? 'border-white/10' : 'border-black/[0.04]'}" onclick="loadSavedProject('${proj.id}')">
+            <span>${proj.tag || (proj.modules ? `${proj.modules.length} Modules` : '14P Standard')}</span>
+            <span>${proj.timestamp || 'Recent'}</span>
+          </div>
+        `;
+
+        list.appendChild(card);
+      });
+
+      lucide.createIcons();
+    }
+
+    function filterProjectSidebar(val) {
+      renderProjectSidebarList(val);
+    }
+
+    function loadSavedProject(id) {
+      const found = state.savedProjects.find(p => p.id === id);
+      if (!found) return;
+
+      state.project = JSON.parse(JSON.stringify(found));
+      const promptInp = document.getElementById('promptInput');
+      if (promptInp) promptInp.value = found.prompt;
+
+      const stage2Title = document.getElementById('stage2Title');
+      if (stage2Title) stage2Title.textContent = found.title;
+
+      const boundsText = document.getElementById('activeBoundsText');
+      if (boundsText && found.dims) {
+        boundsText.textContent = `${found.dims.len}×${found.dims.wid}×${found.dims.hgt} mm`;
+      }
+
+      switchPage('design');
+      goToStage(2);
+      if (typeof init3DCanvas === 'function') setTimeout(init3DCanvas, 50);
+      closeProjectSidebar();
+      renderProjectSidebarList();
+      showToast(`Loaded "${found.title}"`);
+    }
+
+    function deleteSavedProject(id, event) {
+      if (event) event.stopPropagation();
+      state.savedProjects = state.savedProjects.filter(p => p.id !== id);
+      renderProjectSidebarList(document.getElementById('projectSearchInput')?.value || '');
+      showToast('Project removed from history');
+    }
+
+    function startNewProject() {
+      const newId = `proj_${Date.now()}`;
+      const defaultProj = {
+        id: newId,
+        title: 'New Hardware Build',
+        prompt: '',
+        category: 'Custom',
+        tag: 'Draft',
+        timestamp: 'Just now',
+        modules: [
+          { port: 'Port 1', name: 'Microcontroller Core', type: 'Core 14P' }
+        ],
+        dims: { len: 100, wid: 70, hgt: 25 }
+      };
+
+      state.project = defaultProj;
+      const promptInp = document.getElementById('promptInput');
+      if (promptInp) promptInp.value = '';
+      
+      switchPage('design');
+      goToStage(1);
+      closeProjectSidebar();
+      renderProjectSidebarList();
+      showToast('Started new hardware project');
+    }
+
+    function exportAllProjectsJson() {
+      const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(state.savedProjects, null, 2));
+      const dlAnchor = document.createElement('a');
+      dlAnchor.setAttribute("href", dataStr);
+      dlAnchor.setAttribute("download", "atech_projects_backup.json");
+      document.body.appendChild(dlAnchor);
+      dlAnchor.click();
+      dlAnchor.remove();
+      showToast('Exported all projects as JSON');
+    }
+
     function loadExample(key) {
       const ex = EXAMPLES[key];
       if (!ex) return;
@@ -2575,6 +2874,28 @@ void loop() {
     function generateConcept() {
       const text = document.getElementById('promptInput').value.trim();
       if (!text) return showToast('Please enter a description');
+
+      if (!state.project.title || state.project.title === 'New Hardware Build' || state.project.prompt !== text) {
+        state.project.prompt = text;
+        if (!state.project.title || state.project.title === 'New Hardware Build') {
+          state.project.title = text.length > 28 ? text.substring(0, 28) + '...' : text;
+        }
+      }
+
+      // Sync into saved projects history
+      const existingIdx = state.savedProjects.findIndex(p => p.title === state.project.title);
+      if (existingIdx >= 0) {
+        state.savedProjects[existingIdx] = JSON.parse(JSON.stringify(state.project));
+        state.savedProjects[existingIdx].timestamp = 'Just now';
+      } else {
+        const newProj = JSON.parse(JSON.stringify(state.project));
+        newProj.id = `proj_${Date.now()}`;
+        newProj.timestamp = 'Just now';
+        newProj.tag = 'Custom Build';
+        state.savedProjects.unshift(newProj);
+      }
+      renderProjectSidebarList();
+
       showToast('Generated 3D Model & Hardware Map');
       document.getElementById('stage2Title').textContent = state.project.title || '3D Concept';
       populateElecList();
@@ -3460,7 +3781,18 @@ void loop() {
 
     window.addEventListener('hashchange', handleHash);
 
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        if (state.isSidebarOpen) closeProjectSidebar();
+        closePersonaModal();
+        closeCustomAgentModal();
+        closeTerminalExportModal();
+        closePostModal();
+      }
+    });
+
     window.addEventListener('DOMContentLoaded', () => {
+      renderProjectSidebarList();
       renderCommGrid(COMM_DATA);
       renderVoting();
       renderVettedPrograms(VETTED_PROGRAMS);
